@@ -1,0 +1,124 @@
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://firebase.google.com/docs/web/learn-more#config-object
+const firebaseConfig = {
+  // ...
+  // The value of `databaseURL` depends on the location of the database
+  databaseURL: "https://tcc-01-14792-default-rtdb.firebaseio.com",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+
+
+login_email
+login_form
+id="login_form" method="post" action="#" enctype="multipart/form-data"
+
+<div class="form-structor">
+<form name="login_form" id="login_form" method="post" action="#" enctype="multipart/form-data">
+	<div class="signup">
+		<h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
+		<div class="form-holder">
+			<input type="email" name="login_email" id="login_email" class="input" placeholder="Email" />
+			<input type="password" name="login_password" id="login_password" class="input" placeholder="Password" />
+		</div>
+		<button type="button" id="login" name="login" class="submit-btn">Sign up</button>
+	</div>
+	<div class="login slide-up">
+		<div class="center">
+			<h2 class="form-title" id="login"><span>or</span>Log in</h2>
+			<div class="form-holder">
+				<input type="email" name="login_email" id="login_email" class="input" placeholder="Email" />
+				<input type="password" name="login_password" id="login_password" class="input" placeholder="Password" />
+			</div>
+			<button type="button" name="login" id="login" class="submit-btn">Log in</button>
+		</div>
+	</div>
+</form>
+</div>
+
+
+
+//Cadastro
+
+<div class="container">
+      <div class="text">
+         Contact us Form
+      </div>
+      <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data">
+         <div class="form-row">
+            <div class="input-data">
+               <input type="text" required>
+               <div class="underline"></div>
+               <label for="">First Name</label>
+            </div>
+            <div class="input-data">
+               <input type="text" required>
+               <div class="underline"></div>
+               <label for="">Last Name</label>
+            </div>
+         </div>
+         <div class="form-row">
+            <div class="input-data">
+               <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email" required>
+               <div class="underline"></div>
+               <label for="">Email Address</label>
+            </div>
+            <div class="input-data">
+               <input type="password" name="password" id="password" class="form-control"  placeholder="Enter your password" required>
+               <div class="underline"></div>
+               <label for="">password</label>
+            </div>			
+            <div class="input-data">
+               <input type="text" required>
+               <div class="underline"></div>
+               <label for="">Website Name</label>
+            </div>
+         </div>
+         <div class="form-row">
+         <div class="input-data textarea">
+            <textarea rows="8" cols="80" required></textarea>
+            <br />
+            <div class="underline"></div>
+            <label for="">Write your message</label>
+            <br />
+            <div class="form-row submit-btn">
+               <div class="input-data">
+                  <div class="inner"></div>
+                  <input type="button" id="register" name="register" class="btn btn-success">
+               </div>
+            </div>
+      </form>
+      </div>
+
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Função para gerar IDs únicos e armazená-los em uma lista
+function generateUniqueIDs(count) {
+  const uniqueIDs = [];
+  const usedIDs = new Set(); // Conjunto para acompanhar IDs usados
+
+  while (uniqueIDs.length < count) {
+    const randomID = getRandomNumber(1, 100);
+
+    if (!usedIDs.has(randomID)) {
+      uniqueIDs.push(randomID);
+      usedIDs.add(randomID);
+    }
+  }
+
+  return uniqueIDs;
+}
+
+const uniqueIDsList = generateUniqueIDs(10);
+console.log(uniqueIDsList);

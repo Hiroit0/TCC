@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/Cadastro.css">
+    <title>Cadastro</title>
+</head>
+<body>
+  <div class="container">
+    <div class="text">
+       Registro de Dados
+    </div>
+    <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data">
+       <div class="form-row">
+          <div class="input-data">
+             <input type="text" placeholder="Nome" id="email" required>
+             <div class="underline"></div>
+          </div>
+
+          <div class="input-data">
+             <input type="text" placeholder="Endereço" id="password" required>
+             <div class="underline"></div>
+          </div>
+       </div>
+
+       <div class="form-row">
+          <div class="input-data">
+             <input type="text" name="email" id="cnpj-input" class="form-control" maxlength="18" placeholder="CNPJ" required>
+             <div class="underline"></div>
+          </div>
+
+          <div class="input-data">
+             <input type="password" name="password" class="form-control"  placeholder="Area de Atuação" required>
+             <div class="underline"></div>
+          </div>	
+
+          <div class="input-data">
+             <input type="tel" id="phone-input" autocomplete="tel-area-code" placeholder="Telefone" required>
+             <div class="underline"></div>
+          </div>
+       </div>
+       <div class="form-row">
+       <div class="input-data textarea">
+          <textarea placeholder="Descrição" rows="8" cols="80" required></textarea>
+          <br />
+          <div class="underline"></div>
+          <br />
+          <div class="form-row submit-btn">
+             <div class="input-data">
+                <div class="inner"></div>
+                <input value="Enviar" type="button" id="register" name="register" class="btn btn-success">
+             </div>
+          </div>
+    </form>
+    </div>
+</body>
+<script src="/js/scriptCadastro.js" type="module"></script>
+</html>

@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600&display=swap');
+
+body{
+  overflow: hidden;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    border: 3px solid gray;
+    padding: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    height: auto;
+    min-height: 600px;
+    border-radius: 20px;
+    background-color: beige;
+    align-content: start;
+}
+.ReloadBtn{
+  background-color: #000;
+  width: 10vh;
+  height: 100vh;  
+  position: absolute;
+  justify-self: flex-start;
+  align-items: center;
+  border-radius: 3px;
+  padding: 12px;
+  font-size: 22px;
+  margin-left: -10px;
+  margin-top: -20px;
+}
+
+.ReloadBtn:hover{
+  background-color: rgb(37, 136, 70);  
+}
+
+
+.card {
+    font-size: 16px;
+    line-height: 10px;
+    font-family: 'EB Garamond', serif;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    background-color: #fff;
+    color:rgb(184, 6, 6);
+    border-radius: 6px;
+    min-width: 100px;
+    min-height: 150px;
+    width: auto;
+    height: auto;
+    align-self: flex-start;
+  }
+
+.card-enter {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: fadeSlideIn 0.5s ease-in-out forwards;
+}
+.custom-card {
+  background-color: #272343; /* Azul escuro */
+  color: #ffffff; /* Texto branco */
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-card p {
+  margin: 8px 0;
+}
+
+.custom-card {
+  background-color: #272343; /* Azul escuro */
+  color: #ffffff; /* Texto branco */
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.area {
+  color: #BA55D3; /* Roxo claro */
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.cidade {
+  color: #9370DB; /* Roxo médio */
+  margin-left: 5px;
+}
+
+.mais {
+  background-color: #1E1E2F; /* Roxo escuro */
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.bordered-word {
+  border: 0.5px solid #9370DB; /* Roxo médio */
+  padding: 2px 6px;
+  margin-right: 6px;
+  border-radius: 4px;
+  margin-bottom: 3px;
+  display: inline-block;
+}
+
+.telefone {
+  background-color: #181829; /* Roxo ainda mais escuro */
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+} 
+.title {
+    color: grey;
+    font-size: 18px;
+  }
+  
+ button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+  }
+  
+button:hover, a:hover {
+    opacity: 0.7;
+  }
+
+
+
+  
