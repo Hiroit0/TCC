@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+.settings {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.settings label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.settings p.value {
+    display: block;
+}
+
+.settings input.edit-input {
+    display: none;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+.edit-mode .settings p.value {
+    display: none;
+}
+
+.edit-mode .settings input.edit-input {
+    display: block;
+}
+
+.edit-mode .edit-btn {
+    display: none;
+}
+
+.edit-mode .save-btn {
+    display: block;
+    
+}
