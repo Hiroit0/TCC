@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações do Usuário</title>
-    <link rel="stylesheet" href="/Host/css/Settings.css">
+    <link rel="stylesheet" href="/host/css/settings.css">
 </head>
 <body>
     <div class="container">
         <h1>Configurações do Usuário</h1>
         <div class="settings">
             <label for="name">Nome:</label>
-            <p class="value">João da Silva</p>
-            <input type="text" class="edit-input" id="name" value="João da Silva">
+            <p class="value" id="nameValue">Carregando...</p>
+            <input type="text" class="edit-input" id="nameInput">
             
             <label for="email">Email:</label>
-            <p class="value">joao@example.com</p>
-            <input type="text" class="edit-input" id="email" value="joao@example.com">
+            <p class="value" id="emailValue">Carregando...</p>
+            <input type="text" class="edit-input" id="emailInput">
             
         </div>
         <div class="edit-btn">
@@ -26,6 +26,6 @@
             <button id="saveButton" >Enviar</button>
         </div>
     </div>
-    <script src="/Host/js/Settings.js"></script>
+    <script type="module" src="/host/js/settings.js"></script>
 </body>
 </html>
