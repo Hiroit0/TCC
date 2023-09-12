@@ -29,7 +29,6 @@ function displayData(inputKey, name, area, cidade, mais, telefone) {
 
         const card = document.createElement("div");
         card.className = "card card-enter";
-        card.classList.add("custom-card");
 
         const nameElement = createParagraph(name, "name");
         const areaCidadeElement = createAreaCidadeParagraph(area, cidade, "area-cidade");
@@ -42,8 +41,16 @@ function displayData(inputKey, name, area, cidade, mais, telefone) {
         card.appendChild(telefoneElement);
 
         cardContainer.appendChild(card);
+
+        card.addEventListener("click", () => {
+            console.log(card);
+            card.style.left = "650px";
+            card.style.transition = "left ease-in 1s"
+        });
     }
 }
+
+
 
 function createParagraph(text, className) {
     const paragraph = document.createElement("p");

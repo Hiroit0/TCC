@@ -38,21 +38,24 @@ body{
 
 
 .card {
+    position: relative;
+    left: 0;
     font-size: 16px;
     line-height: 10px;
     font-family: 'EB Garamond', serif;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
-    margin: auto;
     text-align: center;
-    background-color: #fff;
-    color:rgb(184, 6, 6);
-    border-radius: 6px;
     min-width: 100px;
     min-height: 150px;
     width: auto;
     height: auto;
     align-self: flex-start;
+    background-color: #272343; /* Azul escuro */
+    color: #ffffff; /* Texto branco */
+    padding: 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
 .card-enter {
@@ -60,27 +63,7 @@ body{
   transform: translateX(-50px);
   animation: fadeSlideIn 0.5s ease-in-out forwards;
 }
-.custom-card {
-  background-color: #272343; /* Azul escuro */
-  color: #ffffff; /* Texto branco */
-  padding: 16px;
-  border-radius: 8px;
-  margin: 16px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-.custom-card p {
-  margin: 8px 0;
-}
-
-.custom-card {
-  background-color: #272343; /* Azul escuro */
-  color: #ffffff; /* Texto branco */
-  padding: 16px;
-  border-radius: 8px;
-  margin: 16px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
 .name {
   font-size: 24px;
