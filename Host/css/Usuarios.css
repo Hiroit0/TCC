@@ -6,6 +6,7 @@ body{
 
 .card-container {
     display: grid;
+    position: relative;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     border: 3px solid gray;
@@ -17,7 +18,9 @@ body{
     border-radius: 20px;
     background-color: beige;
     align-content: start;
+    right: 0;
 }
+
 .ReloadBtn{
   background-color: #000;
   width: 10vh;
@@ -139,6 +142,18 @@ button:hover, a:hover {
     opacity: 0.7;
   }
 
+.button-container button{
+  max-width: 70px;
+  transform: scale(0.7);
 
+}
 
-  
+.Button-Certo{
+  background-color: green;
+  border-radius: 6px;
+}
+
+.Button-Errado{
+  background-color: red;
+  border-radius: 6px;
+}

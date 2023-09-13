@@ -21,7 +21,7 @@ const db = getDatabase();
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
 
-function displayData(inputKey, name, area, cidade, mais, telefone) {
+function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
     if (!processedIDs.has(inputKey)) {
         processedIDs.add(inputKey);
         console.log("Ids processados: " + inputKey);
@@ -40,13 +40,66 @@ function displayData(inputKey, name, area, cidade, mais, telefone) {
         card.appendChild(maisElement);
         card.appendChild(telefoneElement);
 
+
         cardContainer.appendChild(card);
 
+        let expandido = false;
+        let transicao = false;
+        let buttonContainer;
+        let descricaoElement;
+        
         card.addEventListener("click", () => {
-            console.log(card);
-            card.style.left = "650px";
-            card.style.transition = "left ease-in 1s"
+            if (!expandido) {
+                console.log(card);
+                card.style.left = "350%";
+                card.style.transition = "left ease-in 1s";
+                cardContainer.style.right = "180px";
+                cardContainer.style.transition = "right ease-in 0.5s";
+                card.classList.remove("card-enter");
+                expandido = true;
+            } else {
+                card.style.left = "0px";
+                card.style.transition = "left ease-in 1s";
+                cardContainer.style.right = "0px";
+                cardContainer.style.transition = "right ease-in 0.5s";
+                expandido = false;
+            }
         });
+        
+        card.addEventListener("transitionend", () => {
+            if (!transicao && expandido) {
+                buttonContainer = document.createElement("div");
+                buttonContainer.className = "button-container";
+        
+                const certoButton = document.createElement("button");
+                certoButton.textContent = "V";
+                certoButton.className = "Button-Certo";
+        
+                const erradoButton = document.createElement("button");
+                erradoButton.textContent = "X";
+                erradoButton.className = "Button-Errado";
+                
+                descricaoElement = createParagraph("Descricao: " + descricao, "descricao");
+                
+                card.appendChild(descricaoElement);
+                buttonContainer.appendChild(erradoButton);
+                buttonContainer.appendChild(certoButton);
+                card.appendChild(buttonContainer);
+                card.style.transform = "scale(1.2)";
+                transicao = true;
+                console.log(card);
+            } else if (transicao && !expandido) {
+                if (buttonContainer) {
+                    card.removeChild(buttonContainer);
+                }
+                if (descricaoElement) {
+                    card.removeChild(descricaoElement);
+                }
+                card.style.transform = "scale(1)";
+                transicao = false;
+            }
+        });
+        
     }
 }
 
@@ -111,7 +164,8 @@ function FindData() {
                         const cidade = snapshot.val().Cidade;
                         const mais = snapshot.val().Mais;
                         const telefone = snapshot.val().tel;
-                        displayData(inputKey, name, area, cidade, mais, telefone); 
+                        const descricao = snapshot.val().Descricao;
+                        displayData(inputKey, name, area, cidade, mais, telefone,descricao); 
                         console.log("Ids sendo puxados: " + allIDs)
                     }
                 })
