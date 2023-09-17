@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const auth = getAuth(); // Obtém a instância de autenticação Firebase
     // Verifica se o usuário está autenticado
-    auth.onAuthStateChanged((user) => {
+    
         if (user) {
             console.log(user)
 
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Erro ao buscar dados do usuário:', error);
             });
         }
-    });
+    
     
     editButton.addEventListener('click', function() {
         document.body.classList.add('edit-mode');

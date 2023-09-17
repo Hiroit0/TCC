@@ -35,7 +35,7 @@
 		    console.log(user);
 		    alert(user.email+" Login successfully!!!");
 		    document.getElementById('logout').style.display = 'block';
-			window.location.href = "/Host/Pages/Usuarios.htm";
+			window.location.href = "/Host/Pages/Chat.htm";
 
 		    // ...
 		  })

@@ -20,8 +20,9 @@ const db = getDatabase();
 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
-
 function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
+    let PosicaoCard = 850
+    
     if (!processedIDs.has(inputKey)) {
         processedIDs.add(inputKey);
         console.log("Ids processados: " + inputKey);
@@ -29,6 +30,11 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
 
         const card = document.createElement("div");
         card.className = "card card-enter";
+        var PosicaoIndividual = PosicaoCard + 100;
+        if (PosicaoIndividual >= 850) {
+            PosicaoIndividual += 100
+        }
+        card.classList.add("card-" + PosicaoIndividual);
 
         const nameElement = createParagraph(name, "name");
         const areaCidadeElement = createAreaCidadeParagraph(area, cidade, "area-cidade");
@@ -50,8 +56,12 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
         
         card.addEventListener("click", () => {
             if (!expandido) {
+                if (PosicaoIndividual >= 1000){
+                    PosicaoIndividual = 850
+                    return PosicaoIndividual;
+                }
                 console.log(card);
-                card.style.left = "350%";
+                card.style.left = PosicaoIndividual + "px";
                 card.style.transition = "left ease-in 1s";
                 cardContainer.style.right = "180px";
                 cardContainer.style.transition = "right ease-in 0.5s";
@@ -136,6 +146,7 @@ function getAllIDs() {
 
     return get(dbref)
         .then((snapshot) => {
+            
             const allIDs = [];
             if (snapshot.exists()) {
                 const data = snapshot.val();
