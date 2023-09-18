@@ -40,7 +40,12 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
         const areaCidadeElement = createAreaCidadeParagraph(area, cidade, "area-cidade");
         const maisElement = createMaisParagraph(mais, "mais");
         const telefoneElement = createParagraph("Telefone: " + telefone, "telefone");
-
+        const inputKeyElement = document.createElement("p");
+        inputKeyElement.textContent = inputKey;
+        inputKeyElement.style.display = "none"; // Tornar invisível
+        
+        
+        card.appendChild(inputKeyElement);
         card.appendChild(nameElement);
         card.appendChild(areaCidadeElement);
         card.appendChild(maisElement);
@@ -60,6 +65,11 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
                     PosicaoIndividual = 850
                     return PosicaoIndividual;
                 }
+                const inputKeyElement = card.querySelector("p");
+                if (inputKeyElement) {
+                const inputKey = inputKeyElement.textContent;
+                console.log("InputKey clicada: " + inputKey);
+                }
                 console.log(card);
                 card.style.left = PosicaoIndividual + "px";
                 card.style.transition = "left ease-in 1s";
@@ -75,7 +85,6 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
                 expandido = false;
             }
         });
-        
         card.addEventListener("transitionend", () => {
             if (!transicao && expandido) {
                 buttonContainer = document.createElement("div");
@@ -98,6 +107,25 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
                 card.style.transform = "scale(1.2)";
                 transicao = true;
                 console.log(card);
+                if (certoButton && inputKeyElement) {
+                    const inputKey = inputKeyElement.textContent;
+                    const userRef = ref(db, "Usuarios/" + inputKey);
+                
+                    // Adicione um evento de clique ao botão certoButton
+                    certoButton.addEventListener("click", () => {
+                        // Atualiza a variável "Aceito" para 1
+                        update(userRef, {
+                            Aceito: 1
+                        })
+                        .then(() => {
+                            alert("Aceito atualizado para 1 com sucesso");
+                            window.location.replace("/host/pages/Chat.html");
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                    });
+                }
             } else if (transicao && !expandido) {
                 if (buttonContainer) {
                     card.removeChild(buttonContainer);
