@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card {
+    position: relative;
+    left: 0;
+    font-size: 16px;
+    line-height: 10px;
+    font-family: 'EB Garamond', serif;
+    max-width: 300px;
+    text-align: center;
+    min-width: 100px;
+    min-height: 150px;
+    width: auto;
+    height: auto;
+    align-self: flex-start;
+    background-color: #272343; /* Azul escuro */
+    color: #ffffff; /* Texto branco */
+    padding: 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: height 1s ease;
+    opacity: 1;
+    transition: opacity 0.5s;
+    cursor: pointer;
+}
+
+.invisible-card {
+    width: 300px;
+    height: 150px;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.selected {
+    position: relative;
+    left: 0;
+    font-size: 16px;
+    line-height: 10px;
+    font-family: 'EB Garamond', serif;
+    max-width: 300px;
+    text-align: center;
+    min-width: 100px;
+    min-height: 150px;
+    width: auto;
+    height: auto;
+    align-self: flex-start;
+    background-color: #eb5910; /* Azul escuro */
+    color: #ffffff; /* Texto branco */
+    padding: 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: height 1s ease;
+    opacity: 1;
+    transition: opacity 0.5s;
+    cursor: pointer;
+  opacity: 1;
+
+}
+
+</style>
+<body>
+    <div class="container">
+        <div class="card" id="card1">Card 1</div>
+        <div class="card" id="card2">Card 2</div>
+        <div class="card" id="card3">Card 3</div>
+        <div class="invisible-card"></div>
+      </div>
+      
+</body>
+<script>
+document.querySelectorAll('.card').forEach((card) => {
+  card.addEventListener('click', () => {
+    if (card.classList.contains('selected')) {
+      // Se o card selecionado for clicado novamente, reverter a ação
+      document.querySelectorAll('.card').forEach((c) => {
+        c.style.opacity = 1;
+      });
+      document.querySelector('.invisible-card').style.opacity = 0;
+      document.querySelector('.invisible-card').classList.remove('selected');
+    } else {
+      // Reduz a opacidade de todos os cards
+      document.querySelectorAll('.card').forEach((c) => {
+        c.style.opacity = 0.5;
+      });
+
+      // Aumenta a opacidade do card clicado e move para a posição da div invisível
+      card.style.opacity = 1;
+      const invisibleCard = document.querySelector('.invisible-card');
+      invisibleCard.style.opacity = 1;
+      invisibleCard.innerHTML = card.innerHTML;
+      invisibleCard.classList.add('selected');
+    }
+  });
+});
+
+
+</script>
+</html>

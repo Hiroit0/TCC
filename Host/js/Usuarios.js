@@ -20,9 +20,7 @@ const db = getDatabase();
 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
-function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
-    let PosicaoCard = 850
-    
+function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {    
     if (!processedIDs.has(inputKey)) {
         processedIDs.add(inputKey);
         console.log("Ids processados: " + inputKey);
@@ -30,11 +28,6 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
 
         const card = document.createElement("div");
         card.className = "card card-enter";
-        var PosicaoIndividual = PosicaoCard + 100;
-        if (PosicaoIndividual >= 850) {
-            PosicaoIndividual += 100
-        }
-        card.classList.add("card-" + PosicaoIndividual);
 
         const nameElement = createParagraph(name, "name");
         const areaCidadeElement = createAreaCidadeParagraph(area, cidade, "area-cidade");
@@ -51,90 +44,83 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
         card.appendChild(maisElement);
         card.appendChild(telefoneElement);
 
-
         cardContainer.appendChild(card);
 
         let expandido = false;
-        let transicao = false;
-        let buttonContainer;
-        let descricaoElement;
-        
+        let selecionado = false;
         card.addEventListener("click", () => {
-            if (!expandido) {
-                if (PosicaoIndividual >= 1000){
-                    PosicaoIndividual = 850
-                    return PosicaoIndividual;
-                }
-                const inputKeyElement = card.querySelector("p");
-                if (inputKeyElement) {
-                const inputKey = inputKeyElement.textContent;
-                console.log("InputKey clicada: " + inputKey);
-                }
-                console.log(card);
-                card.style.left = PosicaoIndividual + "px";
-                card.style.transition = "left ease-in 1s";
-                cardContainer.style.right = "180px";
-                cardContainer.style.transition = "right ease-in 0.5s";
-                card.classList.remove("card-enter");
-                expandido = true;
-            } else {
-                card.style.left = "0px";
-                card.style.transition = "left ease-in 1s";
-                cardContainer.style.right = "0px";
-                cardContainer.style.transition = "right ease-in 0.5s";
-                expandido = false;
-            }
-        });
-        card.addEventListener("transitionend", () => {
-            if (!transicao && expandido) {
-                buttonContainer = document.createElement("div");
-                buttonContainer.className = "button-container";
-        
-                const certoButton = document.createElement("button");
-                certoButton.textContent = "V";
-                certoButton.className = "Button-Certo";
-        
-                const erradoButton = document.createElement("button");
-                erradoButton.textContent = "X";
-                erradoButton.className = "Button-Errado";
-                
-                descricaoElement = createParagraph("Descricao: " + descricao, "descricao");
-                
-                card.appendChild(descricaoElement);
-                buttonContainer.appendChild(erradoButton);
-                buttonContainer.appendChild(certoButton);
-                card.appendChild(buttonContainer);
-                card.style.transform = "scale(1.2)";
-                transicao = true;
-                console.log(card);
-                if (certoButton && inputKeyElement) {
-                    const inputKey = inputKeyElement.textContent;
-                    const userRef = ref(db, "Usuarios/" + inputKey);
-                
-                    // Adicione um evento de clique ao botão certoButton
-                    certoButton.addEventListener("click", () => {
-                        // Atualiza a variável "Aceito" para 1
-                        update(userRef, {
-                            Aceito: 1
-                        })
-                        .then(() => {
-                            alert("Aceito atualizado para 1 com sucesso");
-                            window.location.replace("/host/pages/Chat.html");
-                        })
-                        .catch((error) => {
-                            alert(error);
-                        });
-                    });
-                }
-            } else if (transicao && !expandido) {
-                if (buttonContainer) {
-                    card.removeChild(buttonContainer);
-                }
+            if (expandido) {
+
+                // Reduz a escala e remove a descrição e os botões
+                card.style.transform = "scale(1)";
+                const descricaoElement = card.querySelector(".descricao");
                 if (descricaoElement) {
                     card.removeChild(descricaoElement);
                 }
-                card.style.transform = "scale(1)";
-                transicao = false;
+                const buttonContainer = card.querySelector(".button-container");
+                if (buttonContainer) {
+                    card.removeChild(buttonContainer);
+                }
+                const invisibleCard = document.querySelector(".invisible-card");
+                invisibleCard.removeChild(card)
+                cardContainer.appendChild(card);
+                cardContainer.style.opacity = 1
+                cardContainer.style.pointerEvents = "all"
+
+                expandido = false;
+            } else {
+
+                const invisibleCard = document.querySelector(".invisible-card");
+                invisibleCard.classList.add(".invisible-card");
+                document.body.appendChild(invisibleCard);
+                card.classList.remove(".card");
+                card.classList.add("selected-card");
+                // Remove a classe .card do card selecionado
+                card.classList.remove("card");
+                const allCards = document.querySelectorAll(".card");
+                allCards.forEach((otherCard) => {
+                    if (otherCard !== card) {
+                        cardContainer.style.opacity = "0.5"
+                        cardContainer.style.pointerEvents = "none"
+                    }
+                });
+                invisibleCard.appendChild(card)
+                card.style.transform = "scale(2)";
+                const descricaoElement = createParagraph("Descricao: " + descricao, "descricao");
+                card.appendChild(descricaoElement);
+                const buttonContainer = document.createElement("div");
+                buttonContainer.className = "button-container";
+                const certoButton = document.createElement("button");
+                certoButton.textContent = "Contratar";
+                certoButton.className = "Button-Certo";
+                const erradoButton = document.createElement("button");
+                erradoButton.textContent = "Recusar";
+                erradoButton.className = "Button-Errado";
+                buttonContainer.appendChild(erradoButton);
+                buttonContainer.appendChild(certoButton);
+                card.appendChild(buttonContainer);
+                certoButton.addEventListener("click",()=>{
+                    if (certoButton && inputKeyElement) {
+                        const inputKey = inputKeyElement.textContent;
+                        const userRef = ref(db, "Usuarios/" + inputKey);
+                    
+                        // Adicione um evento de clique ao botão certoButton
+                        certoButton.addEventListener("click", () => {
+                            // Atualiza a variável "Aceito" para 1
+                            update(userRef, {
+                                Aceito: 1
+                            })
+                            .then(() => {
+                                alert("Aceito atualizado para 1 com sucesso");
+                                window.location.replace("/host/pages/Chat.html");
+                            })
+                            .catch((error) => {
+                                alert(error);
+                            });
+                        });
+                    }
+                })
+                expandido = true;
             }
         });
         
@@ -165,8 +151,6 @@ function createMaisParagraph(maisText, className) {
     paragraph.classList.add(className);
     return paragraph;
 }
-
-
 
 
 function getAllIDs() {
