@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <input type="file" id="fileInput">
+    <button id="uploadButton">Upload Image</button>
+    <div id="imageContainer">
+      <img id="image" src="" alt="Uploaded Image">
+    </div>
+  </body>
+  
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getStorage, ref as storageRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC-sTNLSRresl1l8dEdHUap3MDnMa8olWg",
+      authDomain: "tcc-01-14792.firebaseapp.com",
+      databaseURL: "https://tcc-01-14792-default-rtdb.firebaseio.com",
+      projectId: "tcc-01-14792",
+      storageBucket: "tcc-01-14792.appspot.com",
+      messagingSenderId: "432967975257",
+      appId: "1:432967975257:web:2c48a5e7df9e3d3d5d8c48",
+      databaseURL: "https://tcc-01-14792-default-rtdb.firebaseio.com",
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    const fileInput = document.getElementById("fileInput");
+    const image = document.getElementById("image");
+    const storage = getStorage();
+    
+    document.getElementById("uploadButton").addEventListener("click", () => {
+      const selectedFile = fileInput.files[0]; // Seleciona o primeiro arquivo do input
+      if (selectedFile) {
+        const storageReference = storageRef(storage, "images/" + selectedFile.name);
+        
+        uploadBytes(storageReference, selectedFile).then((snapshot) => {
+          console.log("Imagem enviada com sucesso!");
+          
+          getDownloadURL(storageReference).then((url) => {
+            console.log("URL da imagem:", url);
+            const div = document.createElement("div"); 
+            document.body.appendChild(div);
+            const image = document.createElement("img")
+            image.src = url
+            document.body.appendChild(image)
+          }).catch((error) => {
+            console.error("Erro ao obter a URL da imagem:", error);
+          });
+        }).catch((error) => {
+          console.error("Erro ao enviar a imagem:", error);
+        });
+      }
+    });
+  </script>
+</html>

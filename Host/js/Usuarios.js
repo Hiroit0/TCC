@@ -91,7 +91,7 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
                 const buttonContainer = document.createElement("div");
                 buttonContainer.className = "button-container";
                 const certoButton = document.createElement("button");
-                certoButton.textContent = "Contratar";
+                certoButton.textContent = "Entrevistar";
                 certoButton.className = "Button-Certo";
                 const erradoButton = document.createElement("button");
                 erradoButton.textContent = "Recusar";
@@ -201,8 +201,6 @@ function FindData() {
             console.error(error);
         });
 }
-
-
 
 var findBtn = document.querySelector("#find");
 findBtn.addEventListener('click', FindData);
