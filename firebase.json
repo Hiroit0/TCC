@@ -21,5 +21,8 @@
       "enabled": true
     },
     "singleProjectMode": false
+  },
+  "storage": {
+    "rules": "firebase.storage.rules"
   }
 }

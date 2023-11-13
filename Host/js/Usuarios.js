@@ -20,6 +20,13 @@ const db = getDatabase();
 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
+addEventListener("DOMContentLoaded", ()=>{
+    const direita = document.createElement("div");
+    direita.classList.add("direita");
+    document.body.appendChild(direita);
+});
+
+
 function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {    
     if (!processedIDs.has(inputKey)) {
         processedIDs.add(inputKey);
@@ -49,9 +56,9 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
         let expandido = false;
         let selecionado = false;
         card.addEventListener("click", () => {
+            localStorage.setItem("Condicao","FOI")
+            
             if (expandido) {
-
-                // Reduz a escala e remove a descrição e os botões
                 card.style.transform = "scale(1)";
                 const descricaoElement = card.querySelector(".descricao");
                 if (descricaoElement) {
@@ -62,16 +69,18 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
                     card.removeChild(buttonContainer);
                 }
                 const invisibleCard = document.querySelector(".invisible-card");
+                console.log(invisibleCard);
                 invisibleCard.removeChild(card)
                 cardContainer.appendChild(card);
                 cardContainer.style.opacity = 1
-                cardContainer.style.pointerEvents = "all"
+                cardContainer.style.pointerEvents = "all";
+                invisibleCard.style.display = "none"
+                console.log(invisibleCard);
 
-                expandido = false;
             } else {
-
                 const invisibleCard = document.querySelector(".invisible-card");
-                invisibleCard.classList.add(".invisible-card");
+                invisibleCard.classList.add("invisible-card");
+                invisibleCard.style.display = "block";
                 document.body.appendChild(invisibleCard);
                 card.classList.remove(".card");
                 card.classList.add("selected-card");
@@ -173,6 +182,8 @@ function getAllIDs() {
             return [];
         });
 }
+
+
 
 function FindData() {
     const dbref = ref(db);

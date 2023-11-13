@@ -122,3 +122,47 @@ function generateUniqueIDs(count) {
 
 const uniqueIDsList = generateUniqueIDs(10);
 console.log(uniqueIDsList);
+
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js';
+  import { getStorage, ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.2.0/firebase-storage.js';
+
+  // Configure your Firebase app (replace with your project information)
+  const firebaseConfig = {
+    apiKey: 'YOUR_API_KEY',
+    authDomain: 'YOUR_AUTH_DOMAIN',
+    projectId: 'YOUR_PROJECT_ID',
+    storageBucket: 'YOUR_STORAGE_BUCKET',
+    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+    appId: 'YOUR_APP_ID',
+  };
+
+  const app = initializeApp(firebaseConfig);
+
+  // Reference to the 'images' folder in Firebase Storage
+  const storage = getStorage(app);
+  const imagesRef = ref(storage, 'images');
+
+  // List the files in the 'images' folder and display their URLs
+  const imageList = document.getElementById('imageList');
+
+  listAll(imagesRef)
+    .then((result) => {
+      result.items.forEach((imageRef) => {
+        // Get the image URL
+        getDownloadURL(imageRef)
+          .then((url) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `<a href="${url}" target="_blank">${imageRef.name}</a>`;
+            imageList.appendChild(listItem);
+          })
+          .catch((error) => {
+            console.error('Error getting image URL:', error);
+          });
+      });
+    })
+    .catch((error) => {
+      console.error('Error listing files in "images" folder:', error);
+    });
+</script>
