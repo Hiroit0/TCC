@@ -12,21 +12,24 @@ body{
     border: 3px solid gray;
     padding: 10px;
     margin: 20px auto;
+    margin-right: 350px;
+    margin-top: -5px;
     max-width: 800px;
     height: auto;
-    min-height: 600px;
+    min-height: 613px;
     border-radius: 20px;
     background-color: beige;
     align-content: start;
     right: 0;
     opacity: 1;
+    overflow-y:auto;
     transition: all 1s ease;
 }
 
 .ReloadBtn{
   background-color: #000;
   width: 10vh;
-  height:100%;  
+  height:110%;  
   position: absolute;
   justify-self: flex-start;
   align-items: center;
@@ -238,13 +241,37 @@ button:hover, a:hover {
   opacity: 0.7; 
 }
 
-.direita{
+.direita {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
   right: 0;
   margin-left: -50px;
   top: 0%;
-  width: 200px;
-  height:100%;
+  width: 230px;
+  height: 100%;
   position: fixed;
   display: flex;
+  flex-direction: column; /* Ensure child elements are stacked vertically */
+  align-items: center; /* Center items horizontally */
   background-color: #272343;
+}
+
+#Titulo {
+  height: 35px;
+  text-align: center;
+  text-justify: auto;
+  font-weight: bold;
+  font-size: big;
+  color: white;
+  border-bottom: 2px solid white;
+  padding-bottom: 5px;
+  display: inline-block;
+  width: 90%;
+}
+
+.MatchesNames {
+  background-color: rgba(255, 0, 0, 0);
+  padding-top: 10px; /* Adjust spacing as needed */
+  margin-right: 50%;
+  color: white;
 }

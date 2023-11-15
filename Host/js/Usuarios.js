@@ -20,11 +20,76 @@ const db = getDatabase();
 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
+
+
+
 addEventListener("DOMContentLoaded", ()=>{
-    const direita = document.createElement("div");
-    direita.classList.add("direita");
-    document.body.appendChild(direita);
+        const direita = document.createElement("div");
+        direita.classList.add("direita");
+        const titulo = document.createElement("h1")
+        titulo.textContent = "MATCHES"
+        titulo.id = "Titulo"
+        direita.appendChild(titulo)
+        document.body.appendChild(direita);
+
+        getAllIDs()
+        .then(allIDs => {
+            allIDs.forEach(inputKey => {
+                checkAceitoValue(inputKey); // Chame a função para verificar "Aceito" para cada usuário
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 });
+
+function checkAceitoValue(inputKey) {
+    const userRef = ref(db, "Usuarios/" + inputKey + "/Aceito");
+
+    get(userRef)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const aceitoValue = snapshot.val();
+
+                // Verifique se "Aceito" é igual a 1
+                if (aceitoValue === 1) {
+                    // Se for igual a 1, obtenha o nome e mostre na div "direita"
+                    const nomeRef = ref(db, "Usuarios/" + inputKey + "/Name");
+
+                    get(nomeRef)
+                        .then((nomeSnapshot) => {
+                            if (nomeSnapshot.exists()) {
+                                const nome = nomeSnapshot.val();
+                                showNomeNaDireita(nome);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+// Função para mostrar o nome na div "direita"
+function showNomeNaDireita(nome) {
+    const direita = document.querySelector(".direita")
+    
+    let nomesContainer = document.querySelector(".MatchesNames");
+    if (!nomesContainer) {
+        nomesContainer = document.createElement("div");
+        nomesContainer.classList.add("MatchesNames");
+        direita.appendChild(nomesContainer);
+    }
+
+    // Create a paragraph element for the name
+    const nomeElement = document.createElement("p");
+    nomeElement.textContent = "Nome: " + nome;
+    nomesContainer.appendChild(nomeElement);
+}
 
 
 function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {    
@@ -114,19 +179,16 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
                         const userRef = ref(db, "Usuarios/" + inputKey);
                     
                         // Adicione um evento de clique ao botão certoButton
-                        certoButton.addEventListener("click", () => {
                             // Atualiza a variável "Aceito" para 1
                             update(userRef, {
                                 Aceito: 1
                             })
                             .then(() => {
                                 alert("Aceito atualizado para 1 com sucesso");
-                                window.location.replace("/host/pages/Chat.html");
                             })
                             .catch((error) => {
                                 alert(error);
                             });
-                        });
                     }
                 })
                 expandido = true;
