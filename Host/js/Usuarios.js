@@ -77,7 +77,7 @@ function checkAceitoValue(inputKey) {
 // Função para mostrar o nome na div "direita"
 function showNomeNaDireita(nome) {
     const direita = document.querySelector(".direita")
-    
+
     let nomesContainer = document.querySelector(".MatchesNames");
     if (!nomesContainer) {
         nomesContainer = document.createElement("div");
@@ -86,10 +86,31 @@ function showNomeNaDireita(nome) {
     }
 
     // Create a paragraph element for the name
-    const nomeElement = document.createElement("p");
+    const nomeElement = document.createElement("div");
     nomeElement.textContent = "Nome: " + nome;
+    nomeElement.classList.add("Nomes")
+    const lastCheckedElement = document.createElement("p");
+    lastCheckedElement.classList.add("LastChecked");
+    
+    // Append the name and last checked elements to the container
     nomesContainer.appendChild(nomeElement);
+    nomesContainer.appendChild(lastCheckedElement);
+
+    // Add a click event listener to the name element
+    nomeElement.addEventListener("click", () => {
+        updateLastCheckedTime(lastCheckedElement);
+    });
 }
+
+function updateLastCheckedTime(element) {
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+    const formattedTime = `${currentDate.getHours()}:${currentDate.getMinutes()}`;
+
+    // Set the last checked time text
+    element.textContent = "Último Contato: " + formattedDate + " " + formattedTime;
+}
+
 
 
 function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {    
