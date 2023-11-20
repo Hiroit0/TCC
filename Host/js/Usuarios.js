@@ -284,7 +284,7 @@ function FindData() {
                         const mais = snapshot.val().Mais;
                         const telefone = snapshot.val().tel;
                         const descricao = snapshot.val().Descricao;
-                        const imgURL = snapshot.val().URL
+                        const imgURL = snapshot.val().URl
                         displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgURL); 
                         console.log("Ids sendo puxados: " + allIDs)
                         console.log("Url sendo puxados: " + imgURL)

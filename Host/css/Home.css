@@ -125,3 +125,4 @@ body:has(.card[data-color="red"]:hover) {
 body:has(.card[data-color="green"]:hover) {
   background-color: rgb(var(--bgOtherCard2) / 100%);
 }
+
