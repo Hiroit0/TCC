@@ -1,58 +1,81 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { getDatabase, ref,set, push, query, orderByKey, limitToLast, get } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+import { getStorage, ref as StorageRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCiLcGIaET63fJjRgSSwwI2NCppt-qnrXw",
-  authDomain: "empresas-aac03.firebaseapp.com",
-  projectId: "empresas-aac03",
-  storageBucket: "empresas-aac03.appspot.com",
-  messagingSenderId: "761927015613",
-  appId: "1:761927015613:web:30d4e852e143d1f3502bd4"
+  apiKey: "AIzaSyC-sTNLSRresl1l8dEdHUap3MDnMa8olWg",
+  authDomain: "tcc-01-14792.firebaseapp.com",
+  databaseURL: "https://tcc-01-14792-default-rtdb.firebaseio.com",
+  projectId: "tcc-01-14792",
+  storageBucket: "tcc-01-14792.appspot.com",
+  messagingSenderId: "432967975257",
+  appId: "1:432967975257:web:2c48a5e7df9e3d3d5d8c48",
+  databaseURL: "https://tcc-01-14792-default-rtdb.firebaseio.com",
 };
 
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
-console.log(app);
+const storage = getStorage();
 
-const db = database;
-const postListRef = ref(db, 'posts');
-const newPostRef = push(postListRef);
-set(newPostRef, {
-    // ...
-});
+document.getElementById("register").addEventListener("click", async function() {
+  // Gather form data
+  var email = document.getElementById("email").value;
+  var senha = document.getElementById("password").value;
+  var cnpj = document.getElementById("cnpj-input").value;
+  var areaAtuacao = document.getElementById("areaAtuacao").value;
+  var telefone = document.getElementById("phone-input").value;
+  var descricao = document.querySelector("textarea").value;
 
-//----- New Registration code start	  
-document.getElementById("register").addEventListener("click", function() {
-  var email =  document.getElementById("email").value;
+  const imagemInput = document.getElementById("imagem-input");
+  const imagemFile = imagemInput.files[0];
+
+  let imageUrl = null;
+
+  if (imagemFile) {
+    const storageRef = StorageRef(storage, "images/");
+    const imagemSnapshot = await uploadBytes(storageRef, imagemFile);
+    imageUrl = await getDownloadURL(imagemSnapshot.ref);
+  }
+
+  const idQuery = query(ref(database, 'Empresas'), orderByKey());
+  const idSnapshot = await get(idQuery);
+  
+  // Get all existing IDs
+  const existingIds = Object.keys(idSnapshot.val() || {});
+
+  // Find the first available ID
+  let newId = 1;
+  while (existingIds.includes(newId.toString())) {
+    newId++;
+  }
+
+  set(ref(database, `Empresas/${newId}`), {
+    Email: email,
+    Senha: senha,
+    CNPJ: cnpj,
+    AreaAtuacao: areaAtuacao,
+    Telefone: telefone,
+    Descricao: descricao,
+    ImageUrl: imageUrl  // Novo campo para armazenar a URL da imagem
+  });
+
+  // Email and password authentication (if needed)
+  var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
-  //For new registration
+
   createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user);
-    alert("Registration successfully!!");
-    window.location.replace('Login.htm')
-
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-    console.log(errorMessage);
-    alert(error);
-  });		  		  
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+      alert("Registration successfully!!");
+      window.location.replace('Login.htm');
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorMessage);
+      alert(errorMessage);
+    });
 });
-//----- End
-

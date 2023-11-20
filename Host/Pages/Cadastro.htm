@@ -15,24 +15,22 @@
     <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data">
        <div class="form-row">
           <div class="input-data">
-             <input type="text" placeholder="Nome" id="email" required>
+             <input type="text" placeholder="Email" id="email" required>
              <div class="underline"></div>
           </div>
-
           <div class="input-data">
-             <input type="text" placeholder="Endereço" id="password" required>
+             <input type="password" placeholder="Senha" id="password" required>
              <div class="underline"></div>
           </div>
        </div>
-
        <div class="form-row">
           <div class="input-data">
-             <input type="text" name="email" id="cnpj-input" class="form-control" maxlength="18" placeholder="CNPJ" required>
+             <input type="text" id="cnpj-input" class="form-control" maxlength="18" placeholder="CNPJ" required>
              <div class="underline"></div>
           </div>
 
           <div class="input-data">
-             <input type="text" name="password" class="form-control"  placeholder="Area de Atuação" required>
+             <input type="text" class="form-control" id="areaAtuacao" placeholder="Area de Atuação" required>
              <div class="underline"></div>
           </div>	
 
@@ -43,7 +41,7 @@
        </div>
        <div class="form-row">
        <div class="input-data textarea">
-          <textarea placeholder="Descrição" rows="8" cols="80" required></textarea>
+          <textarea placeholder="Descrição" id="textarea" rows="8" cols="80" required></textarea>
           <br />
           <div class="underline"></div>
           <br />
@@ -53,6 +51,7 @@
                 <input value="Enviar" type="button" id="register" name="register" class="btn btn-success">
              </div>
           </div>
+          <input type="file" id="imagem-input" accept="image/*" required>
     </form>
     </div>
 </body>

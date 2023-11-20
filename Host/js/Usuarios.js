@@ -9,7 +9,6 @@ const firebaseConfig = {
   storageBucket: "tcc-01-14792.appspot.com",
   messagingSenderId: "432967975257",
   appId: "1:432967975257:web:2c48a5e7df9e3d3d5d8c48",
-  databaseURL: "https://tcc-01-14792-default-rtdb.firebaseio.com",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -19,9 +18,6 @@ console.log(app);
 const db = getDatabase();
 
 const processedIDs = new Set(); // Para armazenar IDs já processados
-
-
-
 
 addEventListener("DOMContentLoaded", ()=>{
         const direita = document.createElement("div");
@@ -113,7 +109,7 @@ function updateLastCheckedTime(element) {
 
 
 
-function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {    
+function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgURL) {    
     if (!processedIDs.has(inputKey)) {
         processedIDs.add(inputKey);
         console.log("Ids processados: " + inputKey);
@@ -129,14 +125,20 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao) {
         const inputKeyElement = document.createElement("p");
         inputKeyElement.textContent = inputKey;
         inputKeyElement.style.display = "none"; // Tornar invisível
+        const imgElement = document.createElement("img");
+        imgElement.src = imgURL;
+        imgElement.style.height = "100px";
+        imgElement.style.width = "100px";
+        console.log(imgElement);
         
-        
+        // Adicione a imagem ao card
+        card.appendChild(imgElement);
         card.appendChild(inputKeyElement);
         card.appendChild(nameElement);
         card.appendChild(areaCidadeElement);
         card.appendChild(maisElement);
         card.appendChild(telefoneElement);
-
+        
         cardContainer.appendChild(card);
 
         let expandido = false;
@@ -282,8 +284,10 @@ function FindData() {
                         const mais = snapshot.val().Mais;
                         const telefone = snapshot.val().tel;
                         const descricao = snapshot.val().Descricao;
-                        displayData(inputKey, name, area, cidade, mais, telefone,descricao); 
+                        const imgURL = snapshot.val().URL
+                        displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgURL); 
                         console.log("Ids sendo puxados: " + allIDs)
+                        console.log("Url sendo puxados: " + imgURL)
                     }
                 })
                 .catch((error) => {
