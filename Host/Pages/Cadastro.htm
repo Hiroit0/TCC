@@ -14,6 +14,10 @@
     </div>
     <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data">
        <div class="form-row">
+         <div class="input-data">
+            <input type="text" placeholder="Nome Legal" id="nome" required>
+            <div class="underline"></div>
+         </div>
           <div class="input-data">
              <input type="text" placeholder="Email" id="email" required>
              <div class="underline"></div>
@@ -28,14 +32,13 @@
              <input type="text" id="cnpj-input" class="form-control" maxlength="18" placeholder="CNPJ" required>
              <div class="underline"></div>
           </div>
-
           <div class="input-data">
              <input type="text" class="form-control" id="areaAtuacao" placeholder="Area de Atuação" required>
              <div class="underline"></div>
           </div>	
 
           <div class="input-data">
-             <input type="number" id="phone-input" autocomplete="tel-area-code" placeholder="Telefone" required>
+             <input maxlength="15" type="text" id="phone-input" autocomplete="tel-area-code" placeholder="Telefone" required>
              <div class="underline"></div>
           </div>
        </div>
@@ -51,8 +54,10 @@
                 <input value="Enviar" type="button" id="register" name="register" class="btn btn-success">
              </div>
           </div>
-          <input type="file" id="imagem-input" accept="image/*" required>
-    </form>
+          <div class="input-data">
+          <input type="file" class="ImageInput" id="imagem-input" accept="image/*" required>
+          </div>
+         </form>
     </div>
 </body>
 <script src="/Host/js/scriptCadastro.js" type="module"></script>

@@ -13,7 +13,8 @@ body{
   min-height: 100vh;
   padding: 10px;
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle, #7426e8 10%, #030005 90%);
+  background: radial-gradient(circle, #555555 10%, #001F3F 90%);
+  overflow: hidden;
 }
 .container{
   max-width: 800px;
@@ -22,13 +23,16 @@ body{
   width: 800px;
   padding: 25px 40px 10px 40px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  bottom: 30%;
+  position: absolute;
 }
+
 .container .text{
   text-align: center;
   font-size: 41px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  background: -webkit-linear-gradient(right, #cc174a, #88308b);
+  background: -webkit-linear-gradient(right, #001F3F, #555555);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -90,7 +94,7 @@ form .form-row .textarea{
   content: "";
   height: 2px;
   width: 100%;
-  background: #d11664;
+  background: #024f9c;
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 0.3s ease;
@@ -105,13 +109,14 @@ form .form-row .textarea{
   overflow: hidden;
   height: 45px!important;
   width: 25%!important;
+  border-radius: 8px;
 }
 .submit-btn .input-data .inner{
   height: 100%;
   width: 300%;
   position: absolute;
   left: -100%;
-  background: -webkit-linear-gradient(right, #cc174a, #88308b);
+  background: -webkit-linear-gradient(right, #0074A2, #FFFFFF);
   transition: all 0.4s;
 }
 .submit-btn .input-data:hover .inner{
@@ -120,7 +125,7 @@ form .form-row .textarea{
 .submit-btn .input-data input{
   background: none;
   border: none;
-  color: rgb(225, 236, 22);
+  color: rgb(255,255, 255);
   text-align: center;
   font-size: 19px;
   font-weight: 500;
@@ -146,4 +151,7 @@ form .form-row .textarea{
   .submit-btn .input-data{
     width: 40%!important;
   }
+}
+.ImageInput{
+  
 }

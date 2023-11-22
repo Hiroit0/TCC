@@ -27,17 +27,7 @@ document.getElementById("register").addEventListener("click", async function() {
   var areaAtuacao = document.getElementById("areaAtuacao").value;
   var telefone = document.getElementById("phone-input").value;
   var descricao = document.querySelector("textarea").value;
-
-  const imagemInput = document.getElementById("imagem-input");
-  const imagemFile = imagemInput.files[0];
-
-  let imageUrl = null;
-
-  if (imagemFile) {
-    const storageRef = StorageRef(storage, "images/");
-    const imagemSnapshot = await uploadBytes(storageRef, imagemFile);
-    imageUrl = await getDownloadURL(imagemSnapshot.ref);
-  }
+  var nome = document.getElementById("nome").value;
 
   const idQuery = query(ref(database, 'Empresas'), orderByKey());
   const idSnapshot = await get(idQuery);
@@ -51,14 +41,27 @@ document.getElementById("register").addEventListener("click", async function() {
     newId++;
   }
 
+  const imagemInput = document.getElementById("imagem-input");
+  const imagemFile = imagemInput.files[0];
+
+  let imageUrl = null;
+
+  if (imagemFile) {
+    const storageRef = StorageRef(storage, "ImagensEmpresas/" + newId);
+    const imagemSnapshot = await uploadBytes(storageRef, imagemFile);
+    imageUrl = await getDownloadURL(imagemSnapshot.ref);
+    console.log(imageUrl);
+  }
+
   set(ref(database, `Empresas/${newId}`), {
+    Nome: nome,
     Email: email,
     Senha: senha,
     CNPJ: cnpj,
     AreaAtuacao: areaAtuacao,
     Telefone: telefone,
     Descricao: descricao,
-    ImageUrl: imageUrl  // Novo campo para armazenar a URL da imagem
+    ImageUrl: imageUrl  
   });
 
   // Email and password authentication (if needed)
@@ -78,4 +81,35 @@ document.getElementById("register").addEventListener("click", async function() {
       console.error(errorMessage);
       alert(errorMessage);
     });
+});
+
+document.querySelector("html").classList.add('js');
+
+document.getElementById('cnpj-input').addEventListener('input', function (e) {
+  var cnpj = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+  if (cnpj.length > 2) {
+    cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2'); // Adiciona ponto após os primeiros dois dígitos
+  }
+  if (cnpj.length > 6) {
+    cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3'); // Adiciona ponto após os próximos três dígitos
+  }
+  if (cnpj.length > 10) {
+    cnpj = cnpj.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4'); // Adiciona barra após os próximos três dígitos
+  }
+  if (cnpj.length > 13) {
+    cnpj = cnpj.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5'); // Adiciona hífen após o último dígito
+  }
+  e.target.value = cnpj;
+});
+
+// Formatação automática do telefone com espaço para o DDD
+document.getElementById('phone-input').addEventListener('input', function (e) {
+  var phone = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+  if (phone.length > 2) {
+    phone = '(' + phone.substring(0, 2) + ') ' + phone.substring(2); // Adiciona parênteses e espaço após os primeiros dois dígitos
+  }
+  if (phone.length > 7) {
+    phone = phone.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona hífen após os próximos cinco dígitos
+  }
+  e.target.value = phone;
 });

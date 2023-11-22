@@ -4,7 +4,7 @@
 html,body {
 	position: relative;
 	min-height: 100vh;
-	background-color: #E1E8EE;
+	background-color: #9B0A11;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -28,8 +28,8 @@ html,body {
 		top: 0;right:0;bottom:0;left:0;
 		background-repeat: no-repeat;
 		background-position: left bottom;
-		background-size: 400px;
-		background-image: url('/Host/images/Predios.jpg');
+		object-fit: cover;
+		background-image: url('/Host/images/contrato.jpg');
 	}
 	
 	.signup {

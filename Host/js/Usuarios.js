@@ -38,7 +38,6 @@ addEventListener("DOMContentLoaded", ()=>{
             console.error(error);
         });
 });
-
 function checkAceitoValue(inputKey) {
     const userRef = ref(db, "Usuarios/" + inputKey + "/Aceito");
 
@@ -69,7 +68,6 @@ function checkAceitoValue(inputKey) {
             console.error(error);
         });
 }
-
 // Função para mostrar o nome na div "direita"
 function showNomeNaDireita(nome) {
     const direita = document.querySelector(".direita")
@@ -124,14 +122,15 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgU
         const telefoneElement = createParagraph("Telefone: " + telefone, "telefone");
         const inputKeyElement = document.createElement("p");
         inputKeyElement.textContent = inputKey;
-        inputKeyElement.style.display = "none"; // Tornar invisível
+        inputKeyElement.style.display = "none"; 
         const imgElement = document.createElement("img");
         imgElement.src = imgURL;
         imgElement.style.height = "100px";
         imgElement.style.width = "100px";
+        imgElement.style.objectFit = "cover"; 
+
         console.log(imgElement);
         
-        // Adicione a imagem ao card
         card.appendChild(imgElement);
         card.appendChild(inputKeyElement);
         card.appendChild(nameElement);
@@ -142,7 +141,6 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgU
         cardContainer.appendChild(card);
 
         let expandido = false;
-        let selecionado = false;
         card.addEventListener("click", () => {
             localStorage.setItem("Condicao","FOI")
             
