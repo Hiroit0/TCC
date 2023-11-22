@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+import { getStorage, ref as StorageRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-sTNLSRresl1l8dEdHUap3MDnMa8olWg",
@@ -16,7 +17,12 @@ const app = initializeApp(firebaseConfig);
 console.log(app);
 
 const db = getDatabase();
-
+const storage = getStorage();
+var storageRef = StorageRef(storage, "ImagensUsuarios/" + "polsaorisd.jpg");
+const urlImagem = getDownloadURL(storageRef);
+document.body.addEventListener("click", () =>  {
+    console.log(urlImagem);
+}) 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
 addEventListener("DOMContentLoaded", ()=>{
