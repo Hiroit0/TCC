@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
 import { getStorage, ref as StorageRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-sTNLSRresl1l8dEdHUap3MDnMa8olWg",
@@ -16,10 +17,13 @@ const app = initializeApp(firebaseConfig);
 
 console.log(app);
 
+
+const auth = getAuth();
 const db = getDatabase();
 const storage = getStorage();
 var storageRef = StorageRef(storage, "ImagensUsuarios/" + "polsaorisd.jpg");
 const urlImagem = getDownloadURL(storageRef);
+
 document.body.addEventListener("click", () =>  {
     console.log(urlImagem);
 }) 
@@ -306,3 +310,28 @@ function FindData() {
 
 var findBtn = document.querySelector("#find");
 findBtn.addEventListener('click', FindData);
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log("Usuário autenticado");
+        var userEmail = user.email;
+        console.log("Email do usuário:", userEmail);
+        const empresasRef = ref(db, 'Empresas');
+        get(empresasRef).then(snapshot => {
+            snapshot.forEach(childSnapshot => {
+                var empresaData = childSnapshot.val();
+                console.log("Dados da empresa:", empresaData);
+
+                if (empresaData.Email === userEmail) {
+                    var nomeDaEmpresa = empresaData.Nome;
+                    console.log("Nome da empresa encontrada:", nomeDaEmpresa);
+                }
+            });
+        }).catch(error => {
+            console.error("Erro ao obter dados do Realtime Database:", error);
+        });
+    } else {
+        console.log("Usuário não autenticado");
+    }
+});
+

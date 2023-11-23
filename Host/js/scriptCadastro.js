@@ -28,7 +28,7 @@ document.getElementById("register").addEventListener("click", async function() {
   var telefone = document.getElementById("phone-input").value;
   var descricao = document.querySelector("textarea").value;
   var nome = document.getElementById("nome").value;
-
+  var lowerCaseEmail = email.toLowerCase();
   const idQuery = query(ref(database, 'Empresas'), orderByKey());
   const idSnapshot = await get(idQuery);
   
@@ -55,7 +55,7 @@ document.getElementById("register").addEventListener("click", async function() {
 
   set(ref(database, `Empresas/${newId}`), {
     Nome: nome,
-    Email: email,
+    Email: lowerCaseEmail,
     Senha: senha,
     CNPJ: cnpj,
     AreaAtuacao: areaAtuacao,
@@ -113,3 +113,12 @@ document.getElementById('phone-input').addEventListener('input', function (e) {
   }
   e.target.value = phone;
 });
+
+document.body.addEventListener("click", ()=>{
+  set(ref(database, "Meet/Useall"),{
+    Nome: "Useall",
+    Senha: 12123,
+    Email: "UseallContato@gmail.com"
+  })
+})
+
