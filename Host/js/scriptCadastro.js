@@ -115,10 +115,8 @@ document.getElementById('phone-input').addEventListener('input', function (e) {
 });
 
 document.body.addEventListener("click", ()=>{
-  set(ref(database, "Meet/Useall"),{
-    Nome: "Useall",
-    Senha: 12123,
-    Email: "UseallContato@gmail.com"
+  set(ref(database, "Meet/Cleito"),{
+    Nome: "Cleito",
   })
 })
 

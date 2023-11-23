@@ -1,13 +1,16 @@
 :root{
-  --bgColorUserCard: 20 0 30; 
-  --bgColorConfigCard: 20 20 70;
-  --bgOtherCard: 80 5 25;
-  --bgOtherCard2: 40 70 5;
+  --darkGreen-color: #001325;
+  --darkGray-color: #272343e3;
+  --lightGreen-color:#026992;
+  --darkGreen-color1: #01182e;
+  --darkGreen-color2: #012446;
+  --darkGreen-color3: #013446;
+  --darkGreen-color4: #014444;
 
 }
 
 body {
-  background-color: #100e17;
+  background-color: var(--darkGreen-color);
   font-family: 'Open Sans', sans-serif;
 }
 .container {
@@ -22,7 +25,7 @@ body {
   display: flex;
   height: 280px;
   width: 200px;
-  background-color: #17141d;
+  background-color: var(--darkGray-color);
   border-radius: 10px;
   box-shadow: -1rem 0 3rem #000;
   transition: 0.4s ease-out;
@@ -39,7 +42,7 @@ body {
 }
 .card:hover {
   transform: translateY(-20px);
-  transition: 0.4s ease-out;
+  transition: 0.6s ease-out;
 }
 .card:hover ~ .card {
   position: relative;
@@ -63,7 +66,7 @@ body {
 
 .bar label{
   line-height: 46px;
-  color: #51068f;
+  color: var(--darkGreen-color);
   font-size: 16px;
 }
 .emptybar {
@@ -78,7 +81,7 @@ body {
   width: 0px;
   height: 100%;
   background: rgb(0,154,217);
-  background: linear-gradient(90deg, rgb(172, 35, 246) 0%, rgb(41, 1, 115) 45%, rgb(23, 2, 56) 100%);
+  background: linear-gradient(90deg, var(--darkGreen-color2) 0%, var(--darkGreen-color3) 45%, var(--darkGreen-color4) 100%);
   transition: 0.6s ease-out;
 }
 .card:hover .filledbar{
@@ -87,9 +90,11 @@ body {
 }
 .card:hover .bar label{
   font-weight: bold;
-  color:#6407af;
+  color:var(--darkGreen-color3);
 
 }
+
+
 .circle {
   position: absolute;
   top: 150px;
@@ -110,19 +115,19 @@ svg {
   transition: 0.6s ease-out;
 }
 
-body:has(.card[data-color="purple"]:hover) {
-  background-color: rgb(var(--bgColorUserCard) / 100%);
+body:has(.card[data-color="light1"]:hover) {
+  background-color: var(--darkGreen-color1); 
 }
 
-body:has(.card[data-color="blue"]:hover) {
-  background-color: rgb(var(--bgColorConfigCard) / 100%);
+body:has(.card[data-color="light2"]:hover) {
+  background-color: var(--darkGreen-color2); 
 }
 
-body:has(.card[data-color="red"]:hover) {
-  background-color: rgb(var(--bgOtherCard) / 100%);
+body:has(.card[data-color="light3"]:hover) {
+  background-color: var(--darkGreen-color3); 
 }
 
-body:has(.card[data-color="green"]:hover) {
-  background-color: rgb(var(--bgOtherCard2) / 100%);
+body:has(.card[data-color="light4"]:hover) {
+  background-color: var(--darkGreen-color4); 
 }
 

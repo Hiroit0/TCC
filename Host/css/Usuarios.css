@@ -32,7 +32,6 @@ body{
     align-content: start;
     right: 0;
     opacity: 1;
-    overflow-y:auto;
     transition: all 1s ease;
 }
 .ReloadBtn{
@@ -261,17 +260,17 @@ button:hover, a:hover {
 
 .Nomes{
   width: fit-content;
-  height: auto;
+  height: 10%;
   color: white;
   white-space: nowrap; 
   border-bottom: darkslateblue 2px solid;
   display: inline-block;
-  margin-bottom: 15px;
   margin-left: 45px;
   width: 100%;
   background-color: #00000028;
   padding: 5px;
   border-radius: 8px;
+  vertical-align: top;
 }
 
 .LastChecked {
@@ -279,6 +278,9 @@ button:hover, a:hover {
   margin-top: 3x; /* Adjust the margin as needed */
   font-size: 10px;
   white-space: nowrap; 
+  margin-left: 50px;
+  bottom: 10%;
+  position: relative
 }
 
 ::-webkit-scrollbar{

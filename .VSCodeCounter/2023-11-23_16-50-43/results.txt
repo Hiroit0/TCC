@@ -1,0 +1,64 @@
+Date : 2023-11-23 16:50:43
+Directory : c:\Users\vinicius.902120\Desktop\TCC
+Total : 32 files,  2601 codes, 126 comments, 353 blanks, all 3080 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| CSS        |         10 |      1,247 |          0 |        100 |      1,347 |
+| JavaScript |          9 |        916 |        103 |        210 |      1,229 |
+| HTML       |         12 |        431 |          1 |         43 |        475 |
+| JSON       |          1 |          7 |         22 |          0 |         29 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                  | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                     |         32 |      2,601 |        126 |        353 |      3,080 |
+| . (Files)                                                             |          1 |          7 |         22 |          0 |         29 |
+| Host                                                                  |         31 |      2,594 |        104 |        353 |      3,051 |
+| Host\Pages                                                            |         12 |        431 |          1 |         43 |        475 |
+| Host\css                                                              |         10 |      1,247 |          0 |        100 |      1,347 |
+| Host\js                                                               |          9 |        916 |        103 |        210 |      1,229 |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                              | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\CadastrarEmpresas.htm | HTML       |         35 |          0 |         13 |         48 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\Cadastro.htm          | HTML       |         63 |          0 |          1 |         64 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\Chat.html             | HTML       |         12 |          0 |          1 |         13 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\Home.htm              | HTML       |         53 |          0 |          0 |         53 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\Login.htm             | HTML       |         38 |          1 |          4 |         43 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\Match.htm             | HTML       |         24 |          0 |          0 |         24 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\Settings.htm          | HTML       |         29 |          0 |          3 |         32 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\Usuarios.htm          | HTML       |         21 |          0 |          0 |         21 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\copaniatize.htm       | HTML       |         45 |          0 |          7 |         52 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\enviarImagem.htm      | HTML       |         51 |          0 |          8 |         59 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\escravinhos.htm       | HTML       |         38 |          0 |          5 |         43 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\Pages\input.htm             | HTML       |         22 |          0 |          1 |         23 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\Cadastro.css            | CSS        |        155 |          0 |          2 |        157 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\CadastroEmpresas.css    | CSS        |         22 |          0 |          5 |         27 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\Chat.css                | CSS        |        257 |          0 |          6 |        263 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\Home.css                | CSS        |        119 |          0 |         10 |        129 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\Login.css               | CSS        |        236 |          0 |         32 |        268 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\Settings.css            | CSS        |         51 |          0 |         11 |         62 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\Usuarios.css            | CSS        |        277 |          0 |         15 |        292 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\escravinhos.css         | CSS        |          3 |          0 |          3 |          6 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\style.css               | CSS        |         38 |          0 |          5 |         43 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\css\styles.css              | CSS        |         89 |          0 |         11 |        100 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\Chat.js                  | JavaScript |        224 |         45 |         70 |        339 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\Home.js                  | JavaScript |          6 |          0 |          0 |          6 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\ScriptDados.js           | JavaScript |         36 |          0 |         12 |         48 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\Settings.js              | JavaScript |         67 |         10 |         21 |         98 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\Usuarios.js              | JavaScript |        316 |         21 |         57 |        394 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\script.js                | JavaScript |         37 |          0 |          9 |         46 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\scriptCadastro.js        | JavaScript |        101 |          5 |         17 |        123 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\scriptLogin.js           | JavaScript |         65 |         18 |         12 |         95 |
+| c:\Users\vinicius.902120\Desktop\TCC\Host\js\scriptUsers.js           | JavaScript |         64 |          4 |         12 |         80 |
+| c:\Users\vinicius.902120\Desktop\TCC\firebase.json                    | JSON       |          7 |         22 |          0 |         29 |
+| Total                                                                 |            |      2,601 |        126 |        353 |      3,080 |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+

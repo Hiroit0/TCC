@@ -78,9 +78,51 @@ function checkAceitoValue(inputKey) {
             console.error(error);
         });
 }
-// Função para mostrar o nome na div "direita"
+
+// Função para obter o último contato do Firebase
+function getLastCheckedTime(nome, element) {
+    const userRef = ref(db, `LastChecked/${nome}`);
+    
+    // Obtém os dados do Firebase
+    get(userRef).then(snapshot => {
+        const data = snapshot.val();
+
+        // Se houver dados, exibe no elemento HTML
+        if (data) {
+            element.textContent = "Último Contato: " + data.datetime;
+        }
+    }).catch(error => {
+        console.error("Erro ao obter o último contato:", error);
+    });
+}
+
+// Função para verificar e atualizar o último contato no Firebase
+function updateLastCheckedTime(element, nome) {
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+    const formattedTime = `${currentDate.getHours()}:${currentDate.getMinutes()}`;
+
+    // Verifica se já existe um registro para esse nome no Firebase
+    const userRef = ref(db, `LastChecked/${nome}`);
+    get(userRef).then(snapshot => {
+        const data = snapshot.val();
+
+        // Se não houver dados ou se a data/hora for diferente, atualiza e exibe
+        if (!data || data.datetime !== `${formattedDate} ${formattedTime}`) {
+            // Atualiza no Firebase
+            set(userRef, { datetime: `${formattedDate} ${formattedTime}` });
+
+            // Atualiza o texto no elemento HTML
+            element.textContent = "Último Contato: " + formattedDate + " " + formattedTime;
+        }
+    }).catch(error => {
+        console.error("Erro ao verificar o último contato:", error);
+    });
+}
+
+// Função para mostrar o nome na lateral direita
 function showNomeNaDireita(nome) {
-    const direita = document.querySelector(".direita")
+    const direita = document.querySelector(".direita");
 
     let nomesContainer = document.querySelector(".MatchesNames");
     if (!nomesContainer) {
@@ -92,28 +134,36 @@ function showNomeNaDireita(nome) {
     // Create a paragraph element for the name
     const nomeElement = document.createElement("div");
     nomeElement.textContent = "Nome: " + nome;
-    nomeElement.classList.add("Nomes")
+    nomeElement.classList.add("Nomes");
     const lastCheckedElement = document.createElement("p");
     lastCheckedElement.classList.add("LastChecked");
-    
+
     // Append the name and last checked elements to the container
     nomesContainer.appendChild(nomeElement);
     nomesContainer.appendChild(lastCheckedElement);
 
+    // Chama a função para obter o último contato ao carregar a página
+    getLastCheckedTime(nome, lastCheckedElement);
+
     // Add a click event listener to the name element
     nomeElement.addEventListener("click", () => {
-        updateLastCheckedTime(lastCheckedElement);
+        updateLastCheckedTime(lastCheckedElement, nome);
     });
 }
 
-function updateLastCheckedTime(element) {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-    const formattedTime = `${currentDate.getHours()}:${currentDate.getMinutes()}`;
+// Obtém a lista de nomes do Firebase e exibe na lateral direita
+const empresasRef = ref(db, 'LastChecked');
+get(empresasRef).then(snapshot => {
+    snapshot.forEach(childSnapshot => {
+        var namaewa = childSnapshot.key;
 
-    // Set the last checked time text
-    element.textContent = "Último Contato: " + formattedDate + " " + formattedTime;
-}
+        // Chama a função para mostrar o nome na lateral direita
+        showNomeNaDireita(namaewa);
+    });
+}).catch(error => {
+    console.error("Erro ao obter dados do Realtime Database:", error);
+});
+
 
 
 
@@ -325,6 +375,12 @@ auth.onAuthStateChanged(user => {
                 if (empresaData.Email === userEmail) {
                     var nomeDaEmpresa = empresaData.Nome;
                     console.log("Nome da empresa encontrada:", nomeDaEmpresa);
+                    get(ref(db, "Meet/" + "Useall")).then(meetSnapshot => {
+                        console.log("Snapshot do Meet", meetSnapshot.val());
+                        // Continue o processamento com os dados do "Meet" se necessário
+                    }).catch(error => {
+                        console.error("Erro ao obter snapshot do Meet:", error);
+                    });
                 }
             });
         }).catch(error => {
