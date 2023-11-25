@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
-import { getStorage, ref as StorageRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -20,10 +19,11 @@ console.log(app);
 
 const auth = getAuth();
 const db = getDatabase();
-const storage = getStorage();
-var storageRef = StorageRef(storage, "ImagensUsuarios/" + "polsaorisd.jpg");
-const urlImagem = getDownloadURL(storageRef);
 
+
+document.body.addEventListener("click", () =>  {
+    console.log(urlImagem);
+}) 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
 addEventListener("DOMContentLoaded", ()=>{
@@ -37,16 +37,17 @@ addEventListener("DOMContentLoaded", ()=>{
 
         getAllIDs()
         .then(allIDs => {
-            allIDs.forEach(inputKey => {
-                checkAceitoValue(inputKey); // Chame a função para verificar "Aceito" para cada usuário
+            allIDs.forEach(userId => {
+                checkAceitoValue(userId); // Chame a função para verificar "Aceito" para cada usuário
             });
         })
         .catch(error => {
             console.error(error);
         });
 });
-function checkAceitoValue(inputKey) {
-    const userRef = ref(db, "Usuarios/" + inputKey + "/Aceito");
+function checkAceitoValue(userId) {
+    const meetRef = ref(db, "Meet");
+    const userRef = ref(meetRef, userId + "/Aceito");
 
     get(userRef)
         .then((snapshot) => {
@@ -56,7 +57,7 @@ function checkAceitoValue(inputKey) {
                 // Verifique se "Aceito" é igual a 1
                 if (aceitoValue === 1) {
                     // Se for igual a 1, obtenha o nome e mostre na div "direita"
-                    const nomeRef = ref(db, "Usuarios/" + inputKey + "/Name");
+                    const nomeRef = ref(meetRef, userId + "/Name");
 
                     get(nomeRef)
                         .then((nomeSnapshot) => {
@@ -75,6 +76,7 @@ function checkAceitoValue(inputKey) {
             console.error(error);
         });
 }
+
 
 // Função para obter o último contato do Firebase
 function getLastCheckedTime(nome, element) {
@@ -164,10 +166,10 @@ get(empresasRef).then(snapshot => {
 
 
 
-function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgURL) {    
-    if (!processedIDs.has(inputKey)) {
-        processedIDs.add(inputKey);
-        console.log("Ids processados: " + inputKey);
+function displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl,nomeDaEmpresa) {    
+    if (!processedIDs.has(userId)) {
+        processedIDs.add(userId);
+        console.log("Ids processados: " + userId);
         const cardContainer = document.getElementById("cardContainer");
 
         const card = document.createElement("div");
@@ -177,11 +179,14 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgU
         const areaCidadeElement = createAreaCidadeParagraph(area, cidade, "area-cidade");
         const maisElement = createMaisParagraph(mais, "mais");
         const telefoneElement = createParagraph("Telefone: " + telefone, "telefone");
-        const inputKeyElement = document.createElement("p");
-        inputKeyElement.textContent = inputKey;
-        inputKeyElement.style.display = "none"; 
+        const userIdElement = document.createElement("p");
+        userIdElement.textContent = userId;
+        userIdElement.style.display = "none"; 
+        const EmpresaElement = document.createElement("p");
+        EmpresaElement.textContent = nomeDaEmpresa;
+        EmpresaElement.style.display = "none"; 
         const imgElement = document.createElement("img");
-        imgElement.src = imgURL;
+        imgElement.src = imgUrl
         imgElement.style.height = "100px";
         imgElement.style.width = "100px";
         imgElement.style.objectFit = "cover"; 
@@ -189,7 +194,8 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgU
         console.log(imgElement);
         
         card.appendChild(imgElement);
-        card.appendChild(inputKeyElement);
+        card.appendChild(userIdElement);
+        card.appendChild(EmpresaElement)
         card.appendChild(nameElement);
         card.appendChild(areaCidadeElement);
         card.appendChild(maisElement);
@@ -199,8 +205,10 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgU
 
         let expandido = false;
         card.addEventListener("click", () => {
-            localStorage.setItem("Condicao","FOI")
-            
+            localStorage.setItem("Condicao", "FOI");
+        
+            const invisibleCard = document.querySelector(".invisible-card");
+        
             if (expandido) {
                 card.style.transform = "scale(1)";
                 const descricaoElement = card.querySelector(".descricao");
@@ -211,32 +219,31 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgU
                 if (buttonContainer) {
                     card.removeChild(buttonContainer);
                 }
-                const invisibleCard = document.querySelector(".invisible-card");
-                console.log(invisibleCard);
-                invisibleCard.removeChild(card)
+        
+                // Verifique se o card está no invisibleCard antes de tentar removê-lo
+                if (invisibleCard.contains(card)) {
+                    invisibleCard.removeChild(card);
+                }
+        
                 cardContainer.appendChild(card);
-                cardContainer.style.opacity = 1
+                cardContainer.style.opacity = 1;
                 cardContainer.style.pointerEvents = "all";
-                invisibleCard.style.display = "none"
-                console.log(invisibleCard);
-
+                invisibleCard.style.display = "none";
+                expandido = false;
             } else {
-                const invisibleCard = document.querySelector(".invisible-card");
                 invisibleCard.classList.add("invisible-card");
                 invisibleCard.style.display = "block";
                 document.body.appendChild(invisibleCard);
                 card.classList.remove(".card");
                 card.classList.add("selected-card");
-                // Remove a classe .card do card selecionado
-                card.classList.remove("card");
                 const allCards = document.querySelectorAll(".card");
                 allCards.forEach((otherCard) => {
                     if (otherCard !== card) {
-                        cardContainer.style.opacity = "0.5"
-                        cardContainer.style.pointerEvents = "none"
+                        cardContainer.style.opacity = "0.5";
+                        cardContainer.style.pointerEvents = "none";
                     }
                 });
-                invisibleCard.appendChild(card)
+                invisibleCard.appendChild(card);
                 card.style.transform = "scale(2)";
                 const descricaoElement = createParagraph("Descricao: " + descricao, "descricao");
                 card.appendChild(descricaoElement);
@@ -251,27 +258,28 @@ function displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgU
                 buttonContainer.appendChild(erradoButton);
                 buttonContainer.appendChild(certoButton);
                 card.appendChild(buttonContainer);
-                certoButton.addEventListener("click",()=>{
-                    if (certoButton && inputKeyElement) {
-                        const inputKey = inputKeyElement.textContent;
-                        const userRef = ref(db, "Usuarios/" + inputKey);
-                    
-                        // Adicione um evento de clique ao botão certoButton
-                            // Atualiza a variável "Aceito" para 1
-                            update(userRef, {
-                                Aceito: 1
-                            })
+                certoButton.addEventListener("click", () => {
+                    if (certoButton && userIdElement && EmpresaElement) {
+                        const userId = userIdElement.textContent;
+                        const nomeDaEmpresa = EmpresaElement.textContent
+                        const userRef = ref(db, `Meet/${nomeDaEmpresa}/${userId}`);
+                        
+                        update(userRef, {
+                            Aceito: 1
+                        })
                             .then(() => {
                                 alert("Aceito atualizado para 1 com sucesso");
+                                alert(nomeDaEmpresa)
                             })
                             .catch((error) => {
                                 alert(error);
                             });
                     }
-                })
+                });
                 expandido = true;
             }
         });
+        
         
     }
 }
@@ -294,148 +302,72 @@ function createAreaCidadeParagraph(areaText, cidadeText, className) {
 
 function createMaisParagraph(maisText, className) {
     const paragraph = document.createElement("p");
-    const words = maisText.split(' ');
-    const borderedWords = words.map(word => `<span class="bordered-word">${word}</span>`);
-    paragraph.innerHTML = borderedWords.join(' ');
+
+    if (maisText.includes(' ')) {
+        const words = maisText.split(' ');
+        const borderedWords = words.map(word => `<span class="bordered-word">${word}</span>`);
+        paragraph.innerHTML = borderedWords.join(' ');
+    } else {
+        paragraph.textContent = maisText; // Se houver apenas uma palavra, define o texto diretamente
+    }
+
     paragraph.classList.add(className);
     return paragraph;
 }
 
 
-function getAllIDs() {
-    const dbref = ref(db, "Usuarios");
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log("Usuário autenticado");
+        var userEmail = user.email;
+        console.log("Email do usuário:", userEmail);
+        const empresasRef = ref(db, 'Empresas');
+        get(empresasRef).then(snapshot => {
+            snapshot.forEach(childSnapshot => {
+                var empresaData = childSnapshot.val();
 
-    return get(dbref)
-        .then((snapshot) => {
-            
-            const allIDs = [];
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                Object.keys(data).forEach(inputKey => {
-                    allIDs.push(inputKey);
-                });
-            }
-            return allIDs;
-        })
-        .catch((error) => {
-            console.error(error);
-            return [];
-        });
-}
+                if (empresaData.Email === userEmail) {
+                    var nomeDaEmpresa = empresaData.Nome;
+                    console.log("Nome da empresa encontrada:", nomeDaEmpresa);
 
-function FindData() {
-    
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            console.log("Usuário autenticado");
-            var userEmail = user.email;
-            console.log("Email do usuário:", userEmail);
-            const empresasRef = ref(db, 'Empresas');
-            get(empresasRef).then(snapshot => {
-                snapshot.forEach(childSnapshot => {
-                    var empresaData = childSnapshot.val();
-                    if (empresaData.Email === userEmail) {
-                        var nomeDaEmpresa = empresaData.Nome;
+                    // Obtendo a referência da pasta "Meet" da empresa logada
+                    const meetRef = ref(db, "Meet/" + nomeDaEmpresa);
 
-                        const meetRef = ref(db, "Meet/" + nomeDaEmpresa);
+                    // Obtendo todos os dados da pasta "Meet" da empresa logada
+                    get(meetRef).then(meetSnapshot => {
+                        meetSnapshot.forEach(userSnapshot => {
+                            var userData = userSnapshot.val();
+                            var userId = userSnapshot.key;
+                            console.log("ID do usuário:", userId);
+                            console.log("Dados do usuário:", userData);
 
-                        get(meetRef).then(meetSnapshot => {
-                            const values = [];
-                    
-                            meetSnapshot.forEach(idSnapshot => {
-                                const id = idSnapshot.key;
-                                const idValues = [];
-                                const ids = []
-                                idSnapshot.forEach(valueSnapshot => {
-                                    const value = valueSnapshot.val();
-                                    idValues.push(value);
-                                    ids.push(id)
+                                get(child(meetRef, userId))
+                                .then((snapshot) => {
+                                    if (snapshot.exists()) {
+                                        const name = snapshot.val().Name;
+                                        const area = snapshot.val().Area;
+                                        const cidade = snapshot.val().Cidade;
+                                        const mais = snapshot.val().Mais;
+                                        const telefone = snapshot.val().Telefone;
+                                        const descricao = snapshot.val().Descricao;
+                                        const imgUrl = snapshot.val().imagem;
+                                        displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl,nomeDaEmpresa); 
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error(error);
                                 });
-                    
-                                // Agora, 'idValues' contém os valores dentro do ID atual
-                                values.push({ values });
-                                const dbref = ref(db);
-
-                                ids.forEach(inputKey => {
-                                    console.log(inputKey)
-                                    get(child(dbref, "Meet/" + nomeDaEmpresa + inputKey))
-                                    .then((snapshot) => {
-                                        if (snapshot.exists()) {
-                                            const name = snapshot.val().Name;
-                                            const area = snapshot.val().Area;
-                                            const cidade = snapshot.val().Cidade;
-                                            const mais = snapshot.val().Mais;
-                                            const telefone = snapshot.val().tel;
-                                            const descricao = snapshot.val().Descricao;
-                                            const imgURL = snapshot.val().imagem
-                                            displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgURL); 
-                                            console.log("Ids sendo puxados: " + allIDs)
-                                            console.log("Url sendo puxados: " + imgURL)
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.error(error);
-                                    });
-                                });
-                            });
-                    
-                            console.log("Lista de IDs e seus valores do Meet:", values);
-                    
-                            // Continue o processamento com a lista de IDs e valores se necessário
-                        }).catch(error => {
-                            console.error("Erro ao obter snapshot do Meet:", error);
+                            // Continue o processamento com os dados do usuário se necessário
                         });
-
-                        console.log("Nome da empresa encontrada:", nomeDaEmpresa);
-                        get(ref(db, "Meet/" + nomeDaEmpresa)).then(meetSnapshot => {
-                            console.log("Snapshot do Meet", meetSnapshot.val());
-                            // Continue o processamento com os dados do "Meet" se necessário
-                        }).catch(error => {
-                            console.error("Erro ao obter snapshot do Meet:", error);
-                        });
-                    }
-                });
-                
-            }).catch(error => {
-                console.error("Erro ao obter dados do Realtime Database:", error);
+                    }).catch(error => {
+                        console.error("Erro ao obter snapshot do Meet:", error);
+                    });
+                }
             });
-        } 
-        
-        
-
-        else {
-            console.log("Usuário não autenticado");
-        }
-    });
-
-
-}
-
-
-var findBtn = document.querySelector("#find");
-findBtn.addEventListener('click', FindData);
-
-
-
-/* document.body.addEventListener("click", ()=>{
-    set(ref(db, "Meet/Cleito/2"),{
-        Area
-        :
-        "la",
-        Cidade
-        :
-        "sapónalkkai",
-        Descricao
-        :
-        "Auuuu porco pidao",
-        Mais
-        :
-        "asads ",
-        Name
-        :
-        "asdadsas",
-        Telefone
-        :
-        "123123",
-    })
-}) */
+        }).catch(error => {
+            console.error("Erro ao obter dados do Realtime Database:", error);
+        });
+    } else {
+        console.log("Usuário não autenticado");
+    }
+});
