@@ -24,9 +24,6 @@ const storage = getStorage();
 var storageRef = StorageRef(storage, "ImagensUsuarios/" + "polsaorisd.jpg");
 const urlImagem = getDownloadURL(storageRef);
 
-document.body.addEventListener("click", () =>  {
-    console.log(urlImagem);
-}) 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
 addEventListener("DOMContentLoaded", ()=>{
@@ -326,68 +323,119 @@ function getAllIDs() {
         });
 }
 
-
-
 function FindData() {
-    const dbref = ref(db);
-    getAllIDs()
-        .then(allIDs => {
-            allIDs.forEach(inputKey => {
-                get(child(dbref, "Usuarios/" + inputKey))
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        const name = snapshot.val().Name;
-                        const area = snapshot.val().Area;
-                        const cidade = snapshot.val().Cidade;
-                        const mais = snapshot.val().Mais;
-                        const telefone = snapshot.val().tel;
-                        const descricao = snapshot.val().Descricao;
-                        const imgURL = snapshot.val().URl
-                        displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgURL); 
-                        console.log("Ids sendo puxados: " + allIDs)
-                        console.log("Url sendo puxados: " + imgURL)
+    
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            console.log("Usuário autenticado");
+            var userEmail = user.email;
+            console.log("Email do usuário:", userEmail);
+            const empresasRef = ref(db, 'Empresas');
+            get(empresasRef).then(snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    var empresaData = childSnapshot.val();
+                    if (empresaData.Email === userEmail) {
+                        var nomeDaEmpresa = empresaData.Nome;
+
+                        const meetRef = ref(db, "Meet/" + nomeDaEmpresa);
+
+                        get(meetRef).then(meetSnapshot => {
+                            const values = [];
+                    
+                            meetSnapshot.forEach(idSnapshot => {
+                                const id = idSnapshot.key;
+                                const idValues = [];
+                                const ids = []
+                                idSnapshot.forEach(valueSnapshot => {
+                                    const value = valueSnapshot.val();
+                                    idValues.push(value);
+                                    ids.push(id)
+                                });
+                    
+                                // Agora, 'idValues' contém os valores dentro do ID atual
+                                values.push({ values });
+                                const dbref = ref(db);
+
+                                ids.forEach(inputKey => {
+                                    console.log(inputKey)
+                                    get(child(dbref, "Meet/" + nomeDaEmpresa + inputKey))
+                                    .then((snapshot) => {
+                                        if (snapshot.exists()) {
+                                            const name = snapshot.val().Name;
+                                            const area = snapshot.val().Area;
+                                            const cidade = snapshot.val().Cidade;
+                                            const mais = snapshot.val().Mais;
+                                            const telefone = snapshot.val().tel;
+                                            const descricao = snapshot.val().Descricao;
+                                            const imgURL = snapshot.val().imagem
+                                            displayData(inputKey, name, area, cidade, mais, telefone,descricao,imgURL); 
+                                            console.log("Ids sendo puxados: " + allIDs)
+                                            console.log("Url sendo puxados: " + imgURL)
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        console.error(error);
+                                    });
+                                });
+                            });
+                    
+                            console.log("Lista de IDs e seus valores do Meet:", values);
+                    
+                            // Continue o processamento com a lista de IDs e valores se necessário
+                        }).catch(error => {
+                            console.error("Erro ao obter snapshot do Meet:", error);
+                        });
+
+                        console.log("Nome da empresa encontrada:", nomeDaEmpresa);
+                        get(ref(db, "Meet/" + nomeDaEmpresa)).then(meetSnapshot => {
+                            console.log("Snapshot do Meet", meetSnapshot.val());
+                            // Continue o processamento com os dados do "Meet" se necessário
+                        }).catch(error => {
+                            console.error("Erro ao obter snapshot do Meet:", error);
+                        });
                     }
-                })
-                .catch((error) => {
-                    console.error(error);
                 });
+                
+            }).catch(error => {
+                console.error("Erro ao obter dados do Realtime Database:", error);
             });
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        } 
+        
+        
+
+        else {
+            console.log("Usuário não autenticado");
+        }
+    });
+
+
 }
+
 
 var findBtn = document.querySelector("#find");
 findBtn.addEventListener('click', FindData);
 
-auth.onAuthStateChanged(user => {
-    if (user) {
-        console.log("Usuário autenticado");
-        var userEmail = user.email;
-        console.log("Email do usuário:", userEmail);
-        const empresasRef = ref(db, 'Empresas');
-        get(empresasRef).then(snapshot => {
-            snapshot.forEach(childSnapshot => {
-                var empresaData = childSnapshot.val();
-                console.log("Dados da empresa:", empresaData);
 
-                if (empresaData.Email === userEmail) {
-                    var nomeDaEmpresa = empresaData.Nome;
-                    console.log("Nome da empresa encontrada:", nomeDaEmpresa);
-                    get(ref(db, "Meet/" + "Useall")).then(meetSnapshot => {
-                        console.log("Snapshot do Meet", meetSnapshot.val());
-                        // Continue o processamento com os dados do "Meet" se necessário
-                    }).catch(error => {
-                        console.error("Erro ao obter snapshot do Meet:", error);
-                    });
-                }
-            });
-        }).catch(error => {
-            console.error("Erro ao obter dados do Realtime Database:", error);
-        });
-    } else {
-        console.log("Usuário não autenticado");
-    }
-});
 
+/* document.body.addEventListener("click", ()=>{
+    set(ref(db, "Meet/Cleito/2"),{
+        Area
+        :
+        "la",
+        Cidade
+        :
+        "sapónalkkai",
+        Descricao
+        :
+        "Auuuu porco pidao",
+        Mais
+        :
+        "asads ",
+        Name
+        :
+        "asdadsas",
+        Telefone
+        :
+        "123123",
+    })
+}) */
