@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-sTNLSRresl1l8dEdHUap3MDnMa8olWg",
@@ -33,10 +33,6 @@ addEventListener("DOMContentLoaded", ()=>{
         
         
 });
-
-
-
-
 
 // Função para obter o último contato do Firebase
 function getLastCheckedTime(nome, element) {
@@ -223,17 +219,18 @@ function displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl
                         const userId = userIdElement.textContent;
                         const nomeDaEmpresa = EmpresaElement.textContent
                         const userRef = ref(db, `Meet/${nomeDaEmpresa}/${userId}`);
-                        
+                    
                         update(userRef, {
                             Aceito: 1
                         })
-                            .then(() => {
-                                alert("Aceito atualizado para 1 com sucesso");
-                                alert(nomeDaEmpresa)
-                            })
-                            .catch((error) => {
-                                alert(error);
-                            });
+                        .then(() => {
+                            alert("Aceito atualizado para 1 com sucesso");
+                            alert(nomeDaEmpresa);
+                            window.open("/Host/Pages/Email.htm", "_blank");
+                         })
+                        .catch((error) => {
+                            alert(error);
+                        });
                     }
                 });
                 expandido = true;
@@ -263,17 +260,18 @@ function createAreaCidadeParagraph(areaText, cidadeText, className) {
 function createMaisParagraph(maisText, className) {
     const paragraph = document.createElement("p");
 
-    if (maisText.includes(' ')) {
+    if (typeof maisText === 'string' && maisText.includes(' ')) {
         const words = maisText.split(' ');
         const borderedWords = words.map(word => `<span class="bordered-word">${word}</span>`);
         paragraph.innerHTML = borderedWords.join(' ');
     } else {
-        paragraph.textContent = maisText; // Se houver apenas uma palavra, define o texto diretamente
+        paragraph.textContent = maisText || ''; // Se maisText for undefined ou null, define o texto como uma string vazia
     }
 
     paragraph.classList.add(className);
     return paragraph;
 }
+
 
 
 auth.onAuthStateChanged(user => {
@@ -365,3 +363,36 @@ function checkAceitoValue(userId, nomeDaEmpresa) {
         .catch((error) => {
             console.error(error);
         });}
+
+        const actionCodeSettings = {
+            url: 'tcc-01-14792.web.app',
+            handleCodeInApp: true,
+          };
+
+        
+        
+        async function pegaremail() {
+            return new Promise((resolve, reject) => {
+                auth.onAuthStateChanged(user => {
+                    if (user) {
+                        const email = "viniciuslummertzg@gmail.com";
+                        resolve(email);
+                    } else {
+                        reject(new Error("Usuário não autenticado."));
+                    }
+                });
+            });
+        }
+        
+        async function MandarEmail() {
+            try {
+                const email = await pegaremail();
+                await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+                alert("Email enviado");
+            } catch (error) {
+                alert("Erro ao enviar o email: " + error.message);
+            }
+        }
+        
+        // Chame MandarEmail quando necessário
+        
