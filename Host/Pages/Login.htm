@@ -1,43 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>
-	<!-- Bootstrap theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/Host/css/Login.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<title>Login</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Host/css/Login.css">
+    <title>Cadastro</title>
 </head>
 <body>
-
-<div class="navbar-collapse collapse"  >
-    <ul class="nav navbar-nav navbar-right">
-         <li><a href="#" id="logout" style="display: none;">Log Out</a></li>
-    </ul>
-</div>
-<br>
-<div class="form-structor">
-	<form name="login_form" id="login_form" method="post" action="#" enctype="multipart/form-data">
-		<div class="signup">
-			<h2 class="form-title" id="signup">Logar</h2>
-			<div class="form-holder">
-				<input type="email" name="login_email" id="login_email" class="input" placeholder="Email" />
-				<input type="password" name="login_password" id="login_password" class="input" placeholder="Senha" />
-			</div>
-			<button type="button" id="login" name="login" class="submit-btn">Entrar</button>
-		</div>
-		<div class="login slide-up">
-			<div class="center">
-				<a href="/Pages/Cadastro.htm"><h2 class="form-title" id="login"><span>ou</span>Registre-se</h2></a>
-				<button type="button" id="ChangePassword" name="change_password" hidden>Change Password</button>
-
-		</div>
-		
-	</form>
-	
+	<h1 class="text">Logar</h1>
+  <div class="container">
+    <div class="text">
+		Arskhan    
 	</div>
-<br>
+    <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data">
+       <div class="form-row">
+          <div class="input-data">
+             <input type="text" placeholder="Email" id="email" required>
+             <div class="underline"></div>
+          </div>
+          <div class="input-data">
+             <input type="password" placeholder="Senha" id="password" required>
+             <div class="underline"></div>
+          </div>
+       </div>
+
+         </form>
+    </div>
 </body>
-	<script src="/Host/js/scriptLogin.js" type="module"></script>
+<script src="/Host/js/scriptLogin.js" type="module"></script>
 </html>

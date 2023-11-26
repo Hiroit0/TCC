@@ -64,6 +64,10 @@ document.getElementById("register").addEventListener("click", async function() {
     ImageUrl: imageUrl  
   });
 
+ set(ref(database, "Meet/"+nome),{
+  a:""
+ })
+
   // Email and password authentication (if needed)
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
