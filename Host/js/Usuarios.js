@@ -20,10 +20,6 @@ console.log(app);
 const auth = getAuth();
 const db = getDatabase();
 
-
-document.body.addEventListener("click", () =>  {
-    console.log(urlImagem);
-}) 
 const processedIDs = new Set(); // Para armazenar IDs já processados
 
 addEventListener("DOMContentLoaded", ()=>{
@@ -34,48 +30,12 @@ addEventListener("DOMContentLoaded", ()=>{
         titulo.id = "Titulo"
         direita.appendChild(titulo)
         document.body.appendChild(direita);
-
-        getAllIDs()
-        .then(allIDs => {
-            allIDs.forEach(userId => {
-                checkAceitoValue(userId); // Chame a função para verificar "Aceito" para cada usuário
-            });
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        
+        
 });
-function checkAceitoValue(userId) {
-    const meetRef = ref(db, "Meet");
-    const userRef = ref(meetRef, userId + "/Aceito");
 
-    get(userRef)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                const aceitoValue = snapshot.val();
 
-                // Verifique se "Aceito" é igual a 1
-                if (aceitoValue === 1) {
-                    // Se for igual a 1, obtenha o nome e mostre na div "direita"
-                    const nomeRef = ref(meetRef, userId + "/Name");
 
-                    get(nomeRef)
-                        .then((nomeSnapshot) => {
-                            if (nomeSnapshot.exists()) {
-                                const nome = nomeSnapshot.val();
-                                showNomeNaDireita(nome);
-                            }
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });
-                }
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}
 
 
 // Função para obter o último contato do Firebase
@@ -329,7 +289,6 @@ auth.onAuthStateChanged(user => {
                 if (empresaData.Email === userEmail) {
                     var nomeDaEmpresa = empresaData.Nome;
                     console.log("Nome da empresa encontrada:", nomeDaEmpresa);
-
                     // Obtendo a referência da pasta "Meet" da empresa logada
                     const meetRef = ref(db, "Meet/" + nomeDaEmpresa);
 
@@ -340,10 +299,11 @@ auth.onAuthStateChanged(user => {
                             var userId = userSnapshot.key;
                             console.log("ID do usuário:", userId);
                             console.log("Dados do usuário:", userData);
-
-                                get(child(meetRef, userId))
+                            console.log(userId);
+                            get(child(meetRef, userId))
                                 .then((snapshot) => {
                                     if (snapshot.exists()) {
+
                                         const name = snapshot.val().Name;
                                         const area = snapshot.val().Area;
                                         const cidade = snapshot.val().Cidade;
@@ -351,13 +311,15 @@ auth.onAuthStateChanged(user => {
                                         const telefone = snapshot.val().Telefone;
                                         const descricao = snapshot.val().Descricao;
                                         const imgUrl = snapshot.val().imagem;
-                                        displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl,nomeDaEmpresa); 
+                                        displayData(userId, name, area, cidade, mais, telefone, descricao, imgUrl, nomeDaEmpresa);
                                     }
                                 })
                                 .catch((error) => {
                                     console.error(error);
                                 });
-                            // Continue o processamento com os dados do usuário se necessário
+
+                            // Chame checkAceitoValue() aqui, passando userId e nomeDaEmpresa como argumentos
+                            checkAceitoValue(userId, nomeDaEmpresa);
                         });
                     }).catch(error => {
                         console.error("Erro ao obter snapshot do Meet:", error);
@@ -367,7 +329,39 @@ auth.onAuthStateChanged(user => {
         }).catch(error => {
             console.error("Erro ao obter dados do Realtime Database:", error);
         });
+
     } else {
         console.log("Usuário não autenticado");
     }
 });
+
+// Defina checkAceitoValue para aceitar userId e nomeDaEmpresa como parâmetros
+function checkAceitoValue(userId, nomeDaEmpresa) {
+    // Sua lógica checkAceitoValue aqui, usando userId e nomeDaEmpresa conforme necessário
+    const userRef = ref(db, `Meet/${nomeDaEmpresa}/${userId}/Aceito`);
+    console.log(userRef)
+    get(userRef)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const aceitoValue = snapshot.val();
+                // Verifique se "Aceito" é igual a 1
+                if (aceitoValue === 1) {
+                    // Se for igual a 1, obtenha o nome e mostre na div "direita"
+                    const nomeRef = ref(db, `Meet/${nomeDaEmpresa}/${userId}/Name`);
+
+                    get(nomeRef)
+                        .then((nomeSnapshot) => {
+                            if (nomeSnapshot.exists()) {
+                                const nome = nomeSnapshot.val();
+                                showNomeNaDireita(nome);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });}

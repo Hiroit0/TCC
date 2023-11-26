@@ -7,13 +7,10 @@
   --lightGreen-color:#026992;
 
 }
-
 body{
   overflow: x;
   background-color: #001F3F;
   }
-
-
 .card-container {
     display: grid;
     position: relative;
