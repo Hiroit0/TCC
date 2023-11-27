@@ -221,6 +221,21 @@ function displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl
                 buttonContainer.appendChild(erradoButton);
                 buttonContainer.appendChild(certoButton);
                 card.appendChild(buttonContainer);
+                if(erradoButton){
+                    console.log("ele existe")
+                    erradoButton.addEventListener("click",()=>{
+                        console.log("asoid")
+                        const userRef = ref(db, `Meet/${nomeDaEmpresa}/${userId}`);
+                        console.log(userRef)
+                        remove(userRef)
+                            .then(() => {
+                                console.log("Usuário removido com sucesso");
+                            })
+                            .catch((error) => {
+                                console.error("Erro ao remover usuário:", error.message);
+                            });
+                    })
+                }
                 certoButton.addEventListener("click", () => {
                     if (certoButton && userIdElement && EmpresaElement) {
                         const userId = userIdElement.textContent;
@@ -239,18 +254,8 @@ function displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl
                             alert(error);
                         });
                     }
-                    erradoButton.addEventListener("click", () => {
-                        
-                          const userRef = ref(db, "Meet/" + userId);
-                          remove(userRef)
-                            .then(() => {
-                              console.log("Usuário removido com sucesso");
-                            })
-                            .catch((error) => {
-                              console.error("Erro ao remover usuário:", error.message);
-                            });
-                        
-                      });               
+
+                                  
                 });
                 expandido = true;
             }
