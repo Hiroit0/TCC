@@ -53,39 +53,40 @@ document.getElementById("register").addEventListener("click", async function() {
     console.log(imageUrl);
   }
 
-  set(ref(database, `Empresas/${newId}`), {
-    Nome: nome,
-    Email: lowerCaseEmail,
-    Senha: senha,
-    CNPJ: cnpj,
-    AreaAtuacao: areaAtuacao,
-    Telefone: telefone,
-    Descricao: descricao,
-    ImageUrl: imageUrl  
-  });
-
- set(ref(database, "Meet/"+nome),{
-  a:""
- })
 
   // Email and password authentication (if needed)
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
 
   createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-      alert("Registration successfully!!");
-      window.location.replace('Login.htm');
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorMessage);
-      alert(errorMessage);
+  .then((userCredential) => {
+    const user = userCredential.user;
+    console.log(user);
+    alert("Cadastro realisado com sucesso!");
+    window.location.replace('Login.htm');    
+    // Somente se a autenticação for bem-sucedida, envie os dados para o Realtime Database
+    set(ref(database, `Empresas/${newId}`), {
+      Nome: nome,
+      Email: lowerCaseEmail,
+      Senha: senha,
+      CNPJ: cnpj,
+      AreaAtuacao: areaAtuacao,
+      Telefone: telefone,
+      Descricao: descricao,
+      ImageUrl: imageUrl  
     });
+  })  
+  .catch((error) => {
+    const errorCode = error.code;
+    if (errorCode === 'auth/email-already-in-use') { alert("Email já está sendo utilizado"); } 
+    else if (errorCode === 'auth/weak-password') { alert("Senha muito fraca, deve conter ao menos 6 caracteres"); }
+    else if (errorCode === 'auth/invalid-email') { alert("Formato de email inválido, deve conter @exemplo.com"); }
+    else { alert("Erro desconhecido: " + error.message) }
+    const errorMessage = error.message;
+    console.error(errorMessage);
+  });
 });
+
 
 document.querySelector("html").classList.add('js');
 

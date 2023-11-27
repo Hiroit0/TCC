@@ -193,7 +193,7 @@ function displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl
                 cardContainer.style.pointerEvents = "all";
                 invisibleCard.style.display = "none";
                 expandido = false;
-            } else {
+            } else {    
                 invisibleCard.classList.add("invisible-card");
                 invisibleCard.style.display = "block";
                 document.body.appendChild(invisibleCard);
@@ -239,6 +239,18 @@ function displayData(userId, name, area, cidade, mais, telefone,descricao,imgUrl
                             alert(error);
                         });
                     }
+                    erradoButton.addEventListener("click", () => {
+                        
+                          const userRef = ref(db, "Meet/" + userId);
+                          remove(userRef)
+                            .then(() => {
+                              console.log("Usuário removido com sucesso");
+                            })
+                            .catch((error) => {
+                              console.error("Erro ao remover usuário:", error.message);
+                            });
+                        
+                      });               
                 });
                 expandido = true;
             }
