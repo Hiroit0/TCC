@@ -37,6 +37,10 @@ body {
 .Usercard{
   cursor:pointer;
 }
+.SettingsCard{
+  cursor:pointer;
+
+}
 .card:not(:first-child) {
     margin-left: -10px;
 }

@@ -33,7 +33,7 @@ body{
 }
 .ReloadBtn{
   background-color: var(--darkGreen-color);
-  width: 10vh;
+  width: 17vh;
   min-height:110%;  
   position: fixed;
   justify-self: flex-start;
@@ -43,8 +43,8 @@ body{
   font-size: 22px;
   margin-left: -10px;
   margin-top: -20px;
-  writing-mode:vertical-lr;
-  pointer-events: none;
+  writing-mode:vertical-dr;
+  pointer-events: all;
 }
 .ReloadBtn:hover{
   background-color: rgb(36, 2, 99);  
@@ -286,4 +286,8 @@ button:hover, a:hover {
 ::-webkit-scrollbar-thumb{
   background-color: var(--lightGreen-color);
   border-radius: 8px;
+}
+.GoHome:hover{
+  color: lightblue;
+  border-bottom: 2px solid gray;
 }

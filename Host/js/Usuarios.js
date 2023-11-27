@@ -30,8 +30,15 @@ addEventListener("DOMContentLoaded", ()=>{
         titulo.id = "Titulo"
         direita.appendChild(titulo)
         document.body.appendChild(direita);
-        
-        
+        const botaomiseravel = document.getElementById("find")
+        const GoHome = document.createElement("p")
+        GoHome.textContent = "Home"
+        GoHome.classList.add("GoHome")
+        botaomiseravel.appendChild(GoHome)
+        GoHome.addEventListener("click",()=>{
+            window.location.href = 'Home.htm';
+            ("Host/Pages/Home.htm")
+        })
 });
 
 // Função para obter o último contato do Firebase
@@ -274,15 +281,15 @@ function createMaisParagraph(maisText, className) {
 
 
 
-auth.onAuthStateChanged(user => {
-    if (user) {
-        console.log("Usuário autenticado");
-        var userEmail = user.email;
-        console.log("Email do usuário:", userEmail);
-        const empresasRef = ref(db, 'Empresas');
-        get(empresasRef).then(snapshot => {
-            snapshot.forEach(childSnapshot => {
-                var empresaData = childSnapshot.val();
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            console.log("Usuário autenticado");
+            var userEmail = user.email;
+            console.log("Email do usuário:", userEmail);
+            const empresasRef = ref(db, 'Empresas');
+            get(empresasRef).then(snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    var empresaData = childSnapshot.val();
 
                 if (empresaData.Email === userEmail) {
                     var nomeDaEmpresa = empresaData.Nome;
@@ -302,12 +309,12 @@ auth.onAuthStateChanged(user => {
                                 .then((snapshot) => {
                                     if (snapshot.exists()) {
 
-                                        const name = snapshot.val().Name;
-                                        const area = snapshot.val().Area;
-                                        const cidade = snapshot.val().Cidade;
-                                        const mais = snapshot.val().Mais;
-                                        const telefone = snapshot.val().Telefone;
-                                        const descricao = snapshot.val().Descricao;
+                                        const name = snapshot.val().name;
+                                        const area = snapshot.val().area;
+                                        const cidade = snapshot.val().cidade;
+                                        const mais = snapshot.val().mais;
+                                        const telefone = snapshot.val().telefone;
+                                        const descricao = snapshot.val().descricao;
                                         const imgUrl = snapshot.val().imagem;
                                         displayData(userId, name, area, cidade, mais, telefone, descricao, imgUrl, nomeDaEmpresa);
                                     }
