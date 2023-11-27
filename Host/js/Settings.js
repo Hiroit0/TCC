@@ -149,3 +149,9 @@ function salvarEdicao(empresaData, DadosContainerElement) {
         console.log("Nenhum valor foi alterado.");
     }
 }
+
+const botao = document.getElementById("GoHome")
+botao.addEventListener("click",()=>{
+    window.location.href = 'Home.htm';
+    ("Host/Pages/Home.htm")
+})

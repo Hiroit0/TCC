@@ -257,7 +257,7 @@ button:hover, a:hover {
 
 .Nomes{
   width: fit-content;
-  height: 10%;
+  height: 20%;
   color: white;
   white-space: nowrap; 
   border-bottom: darkslateblue 2px solid;
@@ -276,8 +276,9 @@ button:hover, a:hover {
   font-size: 10px;
   white-space: nowrap; 
   margin-left: 50px;
-  bottom: 10%;
-  position: relative
+  bottom: 18%;
+  position: relative;
+  font-size:15px
 }
 
 ::-webkit-scrollbar{

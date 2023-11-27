@@ -152,6 +152,14 @@ form .form-row .textarea{
     width: 40%!important;
   }
 }
-.ImageInput{
-  
+::-webkit-file-upload-button{
+  border-radius: 8px;
+  width: 140px;
+  height: 30px;
+  background-color: #3498db;
+  transition: all 0.3s;
+}
+::-webkit-file-upload-button:hover{
+  color: white;
+  cursor: pointer;
 }

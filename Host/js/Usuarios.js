@@ -51,7 +51,7 @@ function getLastCheckedTime(nome, element) {
 
         // Se houver dados, exibe no elemento HTML
         if (data) {
-            element.textContent = "Último Contato: " + data.datetime;
+            element.textContent = "Último Contato: Nunca" ;
         }
     }).catch(error => {
         console.error("Erro ao obter o último contato:", error);
@@ -75,7 +75,7 @@ function updateLastCheckedTime(element, nome) {
             set(userRef, { datetime: `${formattedDate} ${formattedTime}` });
 
             // Atualiza o texto no elemento HTML
-            element.textContent = "Último Contato: " + formattedDate + " " + formattedTime;
+            element.textContent = "Último Contato: Nunca " ;
         }
     }).catch(error => {
         console.error("Erro ao verificar o último contato:", error);
@@ -95,7 +95,7 @@ function showNomeNaDireita(nome) {
 
     // Create a paragraph element for the name
     const nomeElement = document.createElement("div");
-    nomeElement.textContent = "Nome: " + nome;
+    nomeElement.textContent = "Em manutenção ";
     nomeElement.classList.add("Nomes");
     const lastCheckedElement = document.createElement("p");
     lastCheckedElement.classList.add("LastChecked");

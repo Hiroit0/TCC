@@ -165,8 +165,19 @@ margin-bottom: 30px;	  }
 		width: 40%!important;
 	  }
 	}
-	.ImageInput{
-	  
+	.BotaoEnviar{
+		background-color: var(--lightGreen-color);
+		border-radius: 8px;
+		width: 15%;
+		height: 10%;
+		position: absolute;
+		top: 87%;
+		color: white;
+		transition: all 0.3s;
+	}
+	.BotaoEnviar:hover{
+		transform: scale(1.2);
+		cursor: pointer;
 	}
 	
 	
