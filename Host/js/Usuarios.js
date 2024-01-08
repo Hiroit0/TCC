@@ -95,7 +95,7 @@ function showNomeNaDireita(nome) {
 
     // Create a paragraph element for the name
     const nomeElement = document.createElement("div");
-    nomeElement.textContent = "Em manutenção ";
+    nomeElement.textContent = "Aguardando Match";
     nomeElement.classList.add("Nomes");
     const lastCheckedElement = document.createElement("p");
     lastCheckedElement.classList.add("LastChecked");
